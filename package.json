@@ -1,0 +1,42 @@
+{
+  "name": "playlist-6-hapi",
+  "version": "0.0.1",
+  "description": "Playist 6 Hapi",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "@hapi/cookie": "^11.0.2",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/inert": "^6.0.4",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/vision": "^6.1.0",
+    "dotenv": "^10.0.0",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "lowdb": "^3.0.0",
+    "uuid": "^8.3.2"
+  },
+  "repository": {
+    "url": "https://github.com/wit-hdip-comp-sci-2021/playlist-6-fastify"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "hapi"
+  ],
+  "engines": {
+    "node": "14.x"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 120
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1"
+  }
+}

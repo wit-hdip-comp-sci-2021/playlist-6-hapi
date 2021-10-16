@@ -1,0 +1,10 @@
+{{> menu}}
+
+<section class="box">
+  <div class="title">
+    {{playlist.title}}
+  </div>
+  <p class="is-size-6 is-italic"> Total Duration: {{playlistSummary.duration}}; Shortest songController: {{playlistSummary.shortestSong.title}}</p>
+  {{> listsongs}}
+  {{> addsong}}
+</section>

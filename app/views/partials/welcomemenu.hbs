@@ -1,0 +1,23 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item title" href="/"> Playlist </a>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button" id="login" href="/login"> Log in </a>
+          <a class="button" id="signup" href="/signup"> Sign up </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  $("#{{id}}").addClass("is-primary");
+</script>

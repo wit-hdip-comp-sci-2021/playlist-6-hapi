@@ -1,0 +1,19 @@
+<form class="box" action="/playlist/{{playlist.id}}/addsong" method="POST">
+  <label>Enter Song Details:</label>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <input class="input" type="text" placeholder="Enter Title" name="title">
+      </div>
+      <div class="field">
+        <input class="input" type="text" placeholder="Enter Artist" name="artist">
+      </div>
+      <div class="field">
+        <input class="input" type="text" placeholder="Enter duration" name="duration">
+      </div>
+    </div>
+  </div>
+  <button class="button is-primary">Add Song</button>
+
+</form>
+{{> error }}

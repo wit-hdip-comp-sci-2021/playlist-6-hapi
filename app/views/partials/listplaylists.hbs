@@ -1,0 +1,16 @@
+{{#each playlists}}
+  <div class="box box-link-hover-shadow">
+    <h2 class="title">
+      {{title}}
+    </h2>
+    <p> Total Duration: {{duration}} </p>
+    <a href="/playlist/{{id}}" class="button">
+      <span class="icon is-small">
+        <i class="fas fa-folder-open"></i>
+      </span>
+    </a>
+    <a href="/dashboardController/deleteplaylist/{{id}}" class="button">
+      <i class="fas fa-trash"></i>
+    </a>
+  </div>
+{{/each}}
