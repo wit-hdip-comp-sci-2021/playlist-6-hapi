@@ -10,19 +10,13 @@ export const playlistController = {
   async index(request, response) {
     const playlistId = request.params.id;
     const playlist = await playlistStore.getPlaylist(playlistId);
-    let errorMsg = null;
-    if (playlistController.validationError) {
-      errorMsg = playlistController.validationError.message;
-      playlistController.validationError = null;
-    }
     const viewData = {
       title: "Playlist",
       playlist: playlist,
       playlistSummary: {
         shortestSong: playlistAnalytics.getShortestSong(playlist),
         duration: playlistAnalytics.getPlaylistDuration(playlist)
-      },
-      errors: errorMsg
+      }
     };
     return response.view("playlist-view", viewData);
   },

@@ -7,9 +7,11 @@ import Joi from "@hapi/joi";
 import Handlebars from "handlebars";
 import dotenv from "dotenv";
 import { routes } from "./routes.js";
+import { accountsController } from "./app/controllers/accounts-controller.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -46,6 +48,7 @@ async function init() {
       password: process.env.cookie_password,
       isSecure: false
     },
+    validateFunc:accountsController.validate,
     redirectTo: "/"
   });
   server.auth.default("session");

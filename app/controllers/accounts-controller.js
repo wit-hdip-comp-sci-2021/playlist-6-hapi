@@ -2,6 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { userStore } from "../models/user-store.js";
 
+
 export const accountsController = {
 
   index(request, response) {
@@ -47,8 +48,11 @@ export const accountsController = {
     }
   },
 
-  async getCurrentUser(request) {
-    const userEmail = request.auth.credentials.email;
-    return await userStore.getUserByEmail(userEmail);
+  async validate(request, session){
+    const user = await userStore.getUserByEmail(session.email);
+    if (!user) {
+      return { valid: false };
+    }
+    return { valid: true, credentials: user };
   }
 };

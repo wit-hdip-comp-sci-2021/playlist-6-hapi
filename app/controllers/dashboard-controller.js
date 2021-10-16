@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const dashboardController = {
   async index(request, response) {
-    const loggedInUser = await accountsController.getCurrentUser(request);
+    const loggedInUser = request.auth.credentials
     const playlists = await playlistStore.getUserPlaylists(loggedInUser.id)
     const viewData = {
       title: "Playlist Dashboard",
@@ -22,7 +22,7 @@ export const dashboardController = {
   },
 
   async addPlaylist(request, response) {
-    const loggedInUser = await accountsController.getCurrentUser(request);
+    const loggedInUser = request.auth.credentials
     const newPlayList = {
       id: uuidv4(),
       userid: loggedInUser.id,
