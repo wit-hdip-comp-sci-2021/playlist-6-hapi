@@ -2,7 +2,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { userStore } from "../models/user-store.js";
 
-
 export const accountsController = {
 
   index(request, response) {

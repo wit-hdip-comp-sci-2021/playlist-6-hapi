@@ -6,15 +6,15 @@ export const userStore = {
   store: new JsonStore("./app/models/user-store.json", { users: [] }),
   collection: "users",
 
-  getAllUsers() {
+  async getAllUsers() {
     return this.store.findAll(this.collection);
   },
 
-  addUser(user) {
+  async addUser(user) {
     this.store.add(this.collection, user);
   },
 
-  getUserById(id) {
+  async getUserById(id) {
     return this.store.findOneBy(this.collection, { id: id });
   },
 

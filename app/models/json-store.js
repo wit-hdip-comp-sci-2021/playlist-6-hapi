@@ -14,6 +14,13 @@ export class JsonStore {
   async save() {
     await this.db.write();
   }
+
+  async findAll(collection) {
+    await this.db.read();
+    const objects = this.db.data[collection]
+    return objects;
+  }
+
   async findBy(collection, filter) {
     await this.db.read();
     const objects = this.db.data[collection];

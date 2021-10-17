@@ -3,14 +3,17 @@ import Hapi from "@hapi/hapi";
 import Inert from "@hapi/inert";
 import Vision from "@hapi/vision";
 import Cookie from "@hapi/cookie";
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import Handlebars from "handlebars";
 import dotenv from "dotenv";
 import { routes } from "./routes.js";
 import { accountsController } from "./app/controllers/accounts-controller.js";
+import HapiSwagger from "hapi-swagger";
+import * as pack from "./package.json";
 
 import path from "path";
 import { fileURLToPath } from "url";
+import { apiRoutes } from "./api-routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,21 +29,39 @@ const server = Hapi.server({
   routes: { cors: true }
 });
 
+const swaggerOptions = {
+  info: {
+    title: "Test API Documentation",
+    version: pack.default.version
+  }
+};
+
 async function init() {
   await server.register(Inert);
   await server.register(Vision);
   await server.register(Cookie);
+
   server.validator(Joi);
+
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions
+    }
+  ]);
+
   server.views({
     engines: {
-      hbs: Handlebars,
+      hbs: Handlebars
     },
     relativeTo: __dirname,
     path: "./app/views",
     layoutPath: "./app/views/layouts",
     partialsPath: "./app/views/partials",
     layout: true,
-    isCached: false,
+    isCached: false
   });
   server.auth.strategy("session", "cookie", {
     cookie: {
@@ -48,11 +69,12 @@ async function init() {
       password: process.env.cookie_password,
       isSecure: false
     },
-    validateFunc:accountsController.validate,
+    validateFunc: accountsController.validate,
     redirectTo: "/"
   });
   server.auth.default("session");
   server.route(routes);
+  server.route(apiRoutes);
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 }
