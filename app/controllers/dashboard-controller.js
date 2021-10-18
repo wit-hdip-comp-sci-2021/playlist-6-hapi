@@ -26,7 +26,7 @@ export const dashboardController = {
     const newPlayList = {
       id: uuidv4(),
       userid: loggedInUser.id,
-      title: request.body.title,
+      title: request.payload.title,
       songs: []
     };
     playlistStore.addPlaylist(newPlayList);

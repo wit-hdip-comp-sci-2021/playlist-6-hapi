@@ -31,9 +31,11 @@ const server = Hapi.server({
 
 const swaggerOptions = {
   info: {
-    title: "Test API Documentation",
-    version: pack.default.version
-  }
+    title: "Playlist API",
+    version: pack.default.version,
+  },
+  reuseDefinitions:false,
+  definitionPrefix: "useLabel"
 };
 
 async function init() {

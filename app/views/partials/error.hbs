@@ -1,5 +1,10 @@
 {{#if errors}}
-  <div class="box">
-    <p> There was a problem... {{errors}}</p>
+  <div class="box content">
+    <p> There was a problem... </p>
+    <ul>
+      {{#each errors}}
+        <li>{{message}}</li>
+      {{/each}}
+    </ul>
   </div>
 {{/if}}

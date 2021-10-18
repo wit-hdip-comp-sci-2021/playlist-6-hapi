@@ -48,5 +48,10 @@ export class JsonStore {
     lodash.remove(objects,obj);
     await this.db.write();
   }
+
+  async removeAll(collection) {
+    this.db.data[collection] = []
+    await this.db.write();
+  }
 }
 

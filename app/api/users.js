@@ -3,14 +3,8 @@
 import { userStore } from "../models/user-store.js";
 import Boom from "@hapi/boom";
 import Joi from "Joi";
-
-const userModel = Joi.object({
-  firstName: Joi.string(),
-  lastName:Joi.string(),
-  email: Joi.string().email(),
-  password: Joi.string(),
-  id: Joi.string().uuid()
-}).label("User");
+import { v4 as uuidv4 } from "uuid";
+import { User, UserId, UserDetails, UserArray} from "../models/joi-schemas.js";
 
 export const Users = {
   find: {
@@ -20,6 +14,7 @@ export const Users = {
       return users;
     },
     tags: ["api"],
+    response: { schema: UserArray },
     description: "Get all users",
     notes: "Returns all users"
   },
@@ -40,13 +35,41 @@ export const Users = {
     tags: ["api"],
     description: "Get a specific user",
     notes: "Returns user details",
-    response: { schema: userModel },
+    response: { schema: User },
     validate: {
       params: Joi.object({
-        id: Joi.string()
-          .required()
-          .description("the id of the user")
+        id: UserId
       })
     }
+  },
+
+  create: {
+    auth: false,
+    handler: async function(request, h) {
+      const user = request.payload;
+      user.id = uuidv4();
+      await userStore.addUser(user);
+      if (user) {
+        return h.response(user).code(201);
+      }
+      return Boom.badImplementation("error creating user");
+    },
+    tags: ["api"],
+    description: "Create a User",
+    notes: "Returns the newly created user",
+    validate: {
+      payload: UserDetails
+    },
+    response: { schema: User }
+  },
+
+  deleteAll: {
+    auth: false,
+    handler: async function(request, h) {
+      await userStore.deleteAll();
+      return { success: true };
+    },
+    tags: ["api"],
+    description: "Delete all users"
   }
 };

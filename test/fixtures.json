@@ -19,5 +19,11 @@
       "email": "bart@simpson.com",
       "password": "secret"
     }
-  ]
+  ],
+  "newUser": {
+    "firstName": "Maggie",
+    "lastName": "Simpson",
+    "email": "maggie@simpson.com",
+    "password": "secret"
+  }
 }

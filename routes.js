@@ -7,16 +7,17 @@ import { playlistController } from "./app/controllers/playlist-controller.js";
 import { songController } from "./app/controllers/song-controller.js";
 
 export const routes = [
-  { method: "GET", path: "/", handler: accountsController.index, options: { auth: false } },
-  { method: "GET", path: "/login", handler: accountsController.login, options: { auth: false } },
-  { method: "GET", path: "/signup", handler: accountsController.signup, options: { auth: false } },
-  { method: "POST", path: "/authenticate", handler: accountsController.authenticate, options: { auth: false } },
-  { method: "POST", path: "/register", handler: accountsController.register, options: { auth: false } },
 
-  { method: "GET", path: "/logout", handler: accountsController.logout },
+  { method: "GET", path: "/", config: accountsController.index },
+  { method: "GET", path: "/signup", config: accountsController.showSignup },
+  { method: "GET", path: "/login", config: accountsController.showLogin },
+  { method: "GET", path: "/logout", config: accountsController.logout },
+  { method: "POST", path: "/register", config: accountsController.signup },
+  { method: "POST", path: "/authenticate", config: accountsController.login },
+
   { method: "GET", path: "/dashboard", handler: dashboardController.index },
   { method: "POST", path: "/dashboard/deleteplaylist/{id}", handler: dashboardController.deletePlaylist },
-  { method: "GET", path: "/dashboard/addplaylist", handler: dashboardController.addPlaylist },
+  { method: "POST", path: "/dashboard/addplaylist", handler: dashboardController.addPlaylist },
 
   { method: "GET", path: "/about", handler: aboutController.index },
   { method: "GET", path: "/playlist/{id}", handler: playlistController.index },

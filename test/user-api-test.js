@@ -9,13 +9,14 @@ suite("User API tests", function() {
   let users = fixtures.default.users;
   let newUser = fixtures.default.newUser;
 
-  const playlistService = new PlaylistService(fixtures.default.donationService);
+  const playlistService = new PlaylistService(fixtures.default.playlistService);
 
   suiteSetup(async function() {
     await playlistService.deleteAllUsers();
   });
 
   suiteTeardown(async function() {
+    //await playlistService.deleteAllUsers();
   });
 
   test("create a user", async function() {
@@ -29,12 +30,12 @@ suite("User API tests", function() {
     console.log(test);
     console.log(returnedUser);
     assert(lowdash.some([returnedUser], test), "returnedUser must be a superset of newUser");
-    assert.isDefined(returnedUser._id);
+    assert.isDefined(returnedUser.id);
   });
 
   test("get user", async function() {
     const u1 = await playlistService.createUser(newUser);
-    const u2 = await playlistService.getUser(u1._id);
+    const u2 = await playlistService.getUser(u1.id);
     assert.deepEqual(u1, u2);
   });
 

@@ -20,5 +20,9 @@ export const userStore = {
 
   async getUserByEmail(email) {
     return await this.store.findOneBy(this.collection, { email: email });
+  },
+
+  async deleteAll() {
+    await this.store.removeAll(this.collection);
   }
 };

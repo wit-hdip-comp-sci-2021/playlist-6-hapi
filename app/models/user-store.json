@@ -1,11 +1,18 @@
 {
   "users": [
     {
-      "firstName": "a",
-      "lastName": "a",
-      "email": "a",
-      "password": "a",
-      "id": "5725f975-f45c-4eb7-b90d-6ff6867b5745"
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "email": "maggie@simpson.com",
+      "password": "secret",
+      "id": "cb19f100-c19c-425d-8371-48f2028e9806"
+    },
+    {
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "email": "maggie@simpson.com",
+      "password": "secret",
+      "id": "9f75a6d9-1239-4ff4-b888-3fa8b01f3d35"
     }
   ]
 }

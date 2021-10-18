@@ -1,107 +1,36 @@
 {
   "playlistCollection": [
     {
-      "id": "8fdb31e9-0980-4ed2-946f-78dc88759311",
-      "userid": "5725f975-f45c-4eb7-b90d-6ff6867b5745",
-      "title": "gtmor",
-      "songs": [
-        {
-          "id": "ecd83600-bca7-4d75-8129-1bfdaeb69205",
-          "title": "12",
-          "artist": "12",
-          "duration": 12
-        },
-        {
-          "id": "af0d15bd-8fe1-4cce-b4c8-28f51eae7b3c",
-          "title": "qwer",
-          "artist": "wer",
-          "duration": 132
-        },
-        {
-          "id": "0dd345f5-e1f7-4887-9c7d-a37bad4f1bf0",
-          "title": "23f",
-          "artist": "23",
-          "duration": 23
-        },
-        {
-          "id": "2f5545ed-900c-4bf0-9f50-cbe2ca74ebc3",
-          "title": "f",
-          "artist": "f",
-          "duration": null
-        }
-      ],
-      "duration": 170
+      "id": "800c6bc6-e415-490d-8fd3-d6ace7030acc",
+      "title": "test",
+      "songs": []
     },
     {
-      "id": "45d6b522-c8e9-4582-915b-2f1134741020",
-      "userid": "5725f975-f45c-4eb7-b90d-6ff6867b5745",
-      "title": "wertw",
-      "songs": [
-        {
-          "id": "33615b54-0122-4d7a-9a9b-cafa066e0797",
-          "title": "34",
-          "artist": "34",
-          "duration": 44
-        },
-        {
-          "id": "8f70701d-4f20-4d6e-8b23-ffae60e59b06",
-          "title": "w",
-          "artist": "w",
-          "duration": 2
-        },
-        {
-          "id": "10829d0b-fd04-4e42-8c59-c8fa2502a707",
-          "title": "dd",
-          "artist": "dd",
-          "duration": 34
-        }
-      ],
-      "duration": 80
-    },
-    {
-      "id": "ce01720e-3ad2-4e15-a857-d7163c030cc7",
-      "userid": "5725f975-f45c-4eb7-b90d-6ff6867b5745",
-      "title": "aaa",
-      "songs": [
-        {
-          "id": "090d9ba1-344e-46a6-acb1-e8be8c639423",
-          "title": "test",
-          "artist": "demo",
-          "duration": 22
-        },
-        {
-          "id": "aceb71d9-f0c1-4e8e-8331-bb8c7d75539e",
-          "title": "qs",
-          "artist": "",
-          "duration": 0
-        },
-        {
-          "id": "5eb6d865-f115-44f4-b94b-b73d0000fcfc",
-          "title": "wdef",
-          "artist": "ewf",
-          "duration": 22
-        },
-        {
-          "id": "50b9951b-ac8c-4615-bd7a-3ba12c3ebb0d",
-          "title": "erth",
-          "artist": "rh",
-          "duration": 12
-        },
-        {
-          "id": "532ec943-fc36-4922-aaaa-4285895c0830",
-          "title": "erth",
-          "artist": "rh",
-          "duration": 12
-        }
-      ],
-      "duration": 124
-    },
-    {
-      "id": "99af3694-c10f-4035-9bbc-bb3d94504f56",
-      "userid": "5725f975-f45c-4eb7-b90d-6ff6867b5745",
-      "title": "3rt234t",
+      "id": "0a7c067a-a3ef-4813-bbb3-44ac64782d94",
+      "userid": "06de624d-5593-450c-9db2-c08b08ce3af9",
+      "title": "qs",
       "songs": [],
-      "duration": 34
+      "duration": 12
+    },
+    {
+      "id": "b8f3ef92-6c6c-4964-8db8-68e45634a151",
+      "userid": "d3fc1b14-c761-4ea7-9cad-0ffcd8aee9fa",
+      "title": "eee",
+      "songs": [
+        {
+          "id": "f44aaa2b-c4d0-46e3-9789-a821d4b42f15",
+          "title": "wef",
+          "artist": "wef",
+          "duration": 23
+        }
+      ],
+      "duration": 23
+    },
+    {
+      "id": "ccf0cd6f-1edc-4fad-90c5-e6f7bf57e312",
+      "userid": "e94de2a8-990d-49f9-b605-f2cab7465dbb",
+      "title": "aa",
+      "songs": []
     }
   ]
 }
