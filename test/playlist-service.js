@@ -8,47 +8,27 @@ export class PlaylistService {
   }
 
   async getUsers() {
-    try {
-      const response = await axios.get(this.baseUrl + "/api/users");
-      return response.data;
-    } catch (e) {
-      return null;
-    }
+    const res = await axios.get(this.baseUrl + "/api/users");
+    return res.data;
   }
 
   async getUser(id) {
-    try {
-      const response = await axios.get(this.baseUrl + "/api/users/" + id);
-      return response.data;
-    } catch (e) {
-      return null;
-    }
+    const res = await axios.get(this.baseUrl + "/api/users/" + id);
+    return res.data;
   }
 
   async createUser(newUser) {
-    try {
-      const response = await axios.post(this.baseUrl + "/api/users", newUser);
-      return response.data;
-    } catch (e) {
-      return null;
-    }
+    const res = await axios.post(this.baseUrl + "/api/users", newUser);
+    return res.data;
   }
 
   async deleteAllUsers() {
-    try {
-      const response = await axios.delete(this.baseUrl + "/api/users");
-      return response.data;
-    } catch (e) {
-      return null;
-    }
+    const response = await axios.delete(this.baseUrl + "/api/users");
+    return response.data;
   }
 
-  async deleteOneUser(id) {
-    try {
-      const response = await axios.delete(this.baseUrl + "/api/users/" + id);
-      return response.data;
-    } catch (e) {
-      return null;
-    }
+  async deleteUser(id) {
+    const response = await axios.delete(this.baseUrl + "/api/users/" + id);
+    return response.data;
   }
 }

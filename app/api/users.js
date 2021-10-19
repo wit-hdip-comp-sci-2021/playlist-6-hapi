@@ -3,15 +3,19 @@
 import { userStore } from "../models/user-store.js";
 import Boom from "@hapi/boom";
 import Joi from "Joi";
-import { v4 as uuidv4 } from "uuid";
-import { User, UserId, UserDetails, UserArray} from "../models/joi-schemas.js";
+import { v4 } from "uuid";
+import { User, UserArray, UserDetails, UserId } from "../models/joi-schemas.js";
 
 export const Users = {
   find: {
     auth: false,
     handler: async function(request, h) {
-      const users = await userStore.getAllUsers();
-      return users;
+      try {
+        const users = await userStore.getAllUsers();
+        return users;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
     },
     tags: ["api"],
     response: { schema: UserArray },
@@ -29,7 +33,7 @@ export const Users = {
         }
         return user;
       } catch (err) {
-        return Boom.notFound("No User with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -46,13 +50,17 @@ export const Users = {
   create: {
     auth: false,
     handler: async function(request, h) {
-      const user = request.payload;
-      user.id = uuidv4();
-      await userStore.addUser(user);
-      if (user) {
-        return h.response(user).code(201);
+      try {
+        const user = request.payload;
+        user.id = v4();
+        await userStore.addUser(user);
+        if (user) {
+          return h.response(user).code(201);
+        }
+        return Boom.badImplementation("error creating user");
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
       }
-      return Boom.badImplementation("error creating user");
     },
     tags: ["api"],
     description: "Create a User",
@@ -66,8 +74,26 @@ export const Users = {
   deleteAll: {
     auth: false,
     handler: async function(request, h) {
-      await userStore.deleteAll();
-      return { success: true };
+      try {
+        await userStore.deleteAll();
+        return { success: true };
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Delete all users"
+  },
+
+  deleteOne: {
+    auth: false,
+    handler: async function(request, h) {
+      try {
+        await userStore.deleteUserById(request.params.id);
+        return { success: true };
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
     },
     tags: ["api"],
     description: "Delete all users"

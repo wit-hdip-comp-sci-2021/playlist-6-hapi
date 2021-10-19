@@ -22,6 +22,11 @@ export const userStore = {
     return await this.store.findOneBy(this.collection, { email: email });
   },
 
+  async deleteUserById(id) {
+    const user = await this.getUserById(id);
+    await this.store.remove(this.collection, user);
+  },
+
   async deleteAll() {
     await this.store.removeAll(this.collection);
   }

@@ -17,7 +17,7 @@ export class JsonStore {
 
   async findAll(collection) {
     await this.db.read();
-    const objects = this.db.data[collection]
+    const objects = this.db.data[collection];
     return objects;
   }
 
@@ -45,12 +45,12 @@ export class JsonStore {
   async remove(collection, obj) {
     await this.db.read();
     const objects = this.db.data[collection];
-    lodash.remove(objects,obj);
+    lodash.remove(objects, obj);
     await this.db.write();
   }
 
   async removeAll(collection) {
-    this.db.data[collection] = []
+    this.db.data[collection] = [];
     await this.db.write();
   }
 }

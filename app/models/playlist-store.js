@@ -1,6 +1,6 @@
 "use strict";
 
-import _ from "lodash";
+import lodash from "lodash";
 import { JsonStore } from "./json-store.js";
 
 export const playlistStore = {
@@ -50,7 +50,7 @@ export const playlistStore = {
   async removeSong(id, songId) {
     const playlist = await this.getPlaylist(id);
     const songs = playlist.songs;
-    _.remove(songs, { id: songId });
+    lodash.remove(songs, { id: songId });
     await this.store.save();
   },
 
