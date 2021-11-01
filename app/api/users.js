@@ -4,7 +4,7 @@ import { userStore } from "../models/user-store.js";
 import Boom from "@hapi/boom";
 import Joi from "Joi";
 import { v4 } from "uuid";
-import { User, UserArray, UserDetails, UserId } from "../models/joi-schemas.js";
+import { User, UserArray, UserCredentials, UserDetails, Uuid } from "../models/joi-schemas.js";
 
 export const Users = {
   find: {
@@ -42,7 +42,7 @@ export const Users = {
     response: { schema: User },
     validate: {
       params: Joi.object({
-        id: UserId
+        id: Uuid
       })
     }
   },
@@ -97,5 +97,27 @@ export const Users = {
     },
     tags: ["api"],
     description: "Delete all users"
+  },
+
+  authenticate: {
+    auth: false,
+    handler: async function(request, h) {
+      try {
+        const user = await userStore.getUserByEmail(request.payload.email);
+        if (user) {
+          return h.response(user).code(200);
+        } else {
+          return Boom.unauthorized();
+        }
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Authenticate a user",
+    validate: {
+      payload: UserCredentials
+    },
+    response: { schema: User }
   }
 };

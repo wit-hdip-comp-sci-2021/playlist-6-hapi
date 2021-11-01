@@ -4,7 +4,6 @@ import { assert } from "chai";
 import * as fixtures from "./fixtures.json";
 import { PlaylistService } from "./playlist-service.js";
 import lodash from "lodash";
-import lowdash from "lodash";
 
 suite("User API tests", function() {
   let users = fixtures.default.users;
@@ -107,6 +106,30 @@ suite("User API tests", function() {
     const allUsers = await playlistService.getUsers();
     for (var i = 0; i < users.length; i++) {
       assert(lodash.some([allUsers[i]], users[i]), "returnedUser must be a superset of newUser");
+    }
+  });
+
+  test("authenticate success", async function() {
+    await playlistService.createUser(newUser);
+    const credentials = {
+      email: newUser.email,
+      password: newUser.password
+    };
+    const result = await playlistService.authenticate(credentials);
+    assert.equal(result.email, newUser.email, "Email matched");
+    assert.isNotNull(result.id, "got an id");
+  });
+
+  test("authenticate fail", async function() {
+    try {
+      const credentials = {
+        email: "noone@here.com",
+        password: "secret"
+      };
+      const result = await playlistService.authenticate(credentials);
+      fail("Invalid credentials not detected");
+    } catch (error) {
+      assert.equal(error.response.data.statusCode, 401, "Incorrect Response Code");
     }
   });
 });

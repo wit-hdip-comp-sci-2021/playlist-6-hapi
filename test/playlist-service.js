@@ -17,6 +17,11 @@ export class PlaylistService {
     return res.data;
   }
 
+  async authenticate(credentials) {
+    const res = await axios.post(this.baseUrl + "/api/users/authenticate", credentials);
+    return res.data;
+  }
+
   async createUser(newUser) {
     const res = await axios.post(this.baseUrl + "/api/users", newUser);
     return res.data;
@@ -29,6 +34,31 @@ export class PlaylistService {
 
   async deleteUser(id) {
     const response = await axios.delete(this.baseUrl + "/api/users/" + id);
+    return response.data;
+  }
+
+  async getPlaylists() {
+    const res = await axios.get(this.baseUrl + "/api/playlists");
+    return res.data;
+  }
+
+  async getPlaylist(id) {
+    const res = await axios.get(this.baseUrl + "/api/playlists/" + id);
+    return res.data;
+  }
+
+  async createPlaylist(playlist) {
+    const res = await axios.post(this.baseUrl + "/api/playlists", playlist);
+    return res.data;
+  }
+
+  async deletePlaylists() {
+    const response = await axios.delete(this.baseUrl + "/api/playlists");
+    return response.data;
+  }
+
+  async deletePlaylist(id) {
+    const response = await axios.delete(this.baseUrl + "/api/playlists/" + id);
     return response.data;
   }
 }

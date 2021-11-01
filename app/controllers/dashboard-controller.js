@@ -1,13 +1,12 @@
 "use strict";
 
-import { accountsController } from "./accounts-controller.js";
 import { playlistStore } from "../models/playlist-store.js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
 
 export const dashboardController = {
   async index(request, response) {
-    const loggedInUser = request.auth.credentials
-    const playlists = await playlistStore.getUserPlaylists(loggedInUser.id)
+    const loggedInUser = request.auth.credentials;
+    const playlists = await playlistStore.getUserPlaylists(loggedInUser.id);
     const viewData = {
       title: "Playlist Dashboard",
       playlists: playlists
@@ -22,9 +21,9 @@ export const dashboardController = {
   },
 
   async addPlaylist(request, response) {
-    const loggedInUser = request.auth.credentials
+    const loggedInUser = request.auth.credentials;
     const newPlayList = {
-      id: uuidv4(),
+      id: v4(),
       userid: loggedInUser.id,
       title: request.payload.title,
       songs: []

@@ -2,7 +2,7 @@
 
 import { playlistStore } from "../models/playlist-store.js";
 import { playlistAnalytics } from "../utils/playlist-analytics.js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
 
 export const playlistController = {
   validationError: null,
@@ -32,7 +32,7 @@ export const playlistController = {
     const playlistId = request.params.id;
     const playlist = await playlistStore.getPlaylist(playlistId);
     const newSong = {
-      id: uuidv4(),
+      id: v4(),
       title: request.payload.title,
       artist: request.payload.artist,
       duration: Number(request.payload.duration)
