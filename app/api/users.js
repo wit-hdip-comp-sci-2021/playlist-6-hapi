@@ -3,7 +3,6 @@
 import { userStore } from "../models/user-store.js";
 import Boom from "@hapi/boom";
 import Joi from "Joi";
-import { v4 } from "uuid";
 import { User, UserArray, UserCredentials, UserDetails, Uuid } from "../models/joi-schemas.js";
 
 export const Users = {
@@ -52,7 +51,6 @@ export const Users = {
     handler: async function(request, h) {
       try {
         const user = request.payload;
-        user.id = v4();
         await userStore.addUser(user);
         if (user) {
           return h.response(user).code(201);
@@ -76,7 +74,7 @@ export const Users = {
     handler: async function(request, h) {
       try {
         await userStore.deleteAll();
-        return { success: true };
+        return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
@@ -90,7 +88,7 @@ export const Users = {
     handler: async function(request, h) {
       try {
         await userStore.deleteUserById(request.params.id);
-        return { success: true };
+        return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }

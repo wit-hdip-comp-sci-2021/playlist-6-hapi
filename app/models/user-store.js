@@ -1,6 +1,7 @@
 "use strict";
 
 import { JsonStore } from "./json-store.js";
+import { v4 } from "uuid";
 
 export const userStore = {
   store: new JsonStore("./app/models/user-store.json", { users: [] }),
@@ -11,6 +12,7 @@ export const userStore = {
   },
 
   async addUser(user) {
+    user.id = v4();
     this.store.add(this.collection, user);
   },
 

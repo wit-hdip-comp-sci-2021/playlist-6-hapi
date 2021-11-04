@@ -57,8 +57,8 @@ export class PlaylistService {
     return response.data;
   }
 
-  async deletePlaylist(id) {
-    const response = await axios.delete(this.baseUrl + "/api/playlists/" + id);
-    return response.data;
+  async deletePlaylist(playlist) {
+    const response = await axios.delete(this.baseUrl + "/api/playlists/" + playlist.id);
+    return response;
   }
 }

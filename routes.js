@@ -16,7 +16,7 @@ export const routes = [
   { method: "POST", path: "/authenticate", config: accountsController.login },
 
   { method: "GET", path: "/dashboard", handler: dashboardController.index },
-  { method: "POST", path: "/dashboard/deleteplaylist/{id}", handler: dashboardController.deletePlaylist },
+  { method: "GET", path: "/dashboard/deleteplaylist/{id}", handler: dashboardController.deletePlaylist },
   { method: "POST", path: "/dashboard/addplaylist", handler: dashboardController.addPlaylist },
 
   { method: "GET", path: "/about", handler: aboutController.index },

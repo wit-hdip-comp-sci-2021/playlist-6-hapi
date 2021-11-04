@@ -29,7 +29,6 @@ export const accountsController = {
     handler: async function(request, h) {
       try {
         const user = request.payload;
-        user.id = uuidv4();
         await userStore.addUser(user);
         return h.redirect("/");
       } catch (err) {
@@ -55,12 +54,12 @@ export const accountsController = {
     handler: async function(request, h) {
       const { email, password } = request.payload;
       try {
-        const user = await userStore.getUserByEmail(request.payload.email);
+        const user = await userStore.getUserByEmail(email);
         if (!user) {
           const message = "Email address is not registered";
           throw Boom.unauthorized(message);
         }
-        request.cookieAuth.set({ email: user.email });
+        request.cookieAuth.set({ id: user.id });
         return h.redirect("/dashboard");
       } catch (err) {
         return h.view("login-view", { errors: [{ message: err.message }] });
@@ -75,7 +74,7 @@ export const accountsController = {
   },
 
   async validate(request, session) {
-    const user = await userStore.getUserByEmail(session.email);
+    const user = await userStore.getUserById(session.id);
     if (!user) {
       return { valid: false };
     }

@@ -2,6 +2,7 @@
 
 import lodash from "lodash";
 import { JsonStore } from "./json-store.js";
+import { v4 } from "uuid";
 
 export const playlistStore = {
   store: new JsonStore("./app/models/playlist-store.json", {
@@ -17,25 +18,28 @@ export const playlistStore = {
     return await this.store.findOneBy(this.collection, { id: id });
   },
 
-  async getUserPlaylists(userid) {
-    return await this.store.findBy(this.collection, { userid: userid });
+  async getUserPlaylists(user) {
+    return await this.store.findBy(this.collection, { userid: user.id });
   },
 
   addPlaylist(playlist) {
+    playlist.id = v4();
     this.store.add(this.collection, playlist);
   },
 
-  async removePlaylist(id) {
-    const playlist = await this.getPlaylist(id);
+  async removePlaylist(playlist) {
     await this.store.remove(this.collection, playlist);
   },
 
-  removeAllPlaylists() {
-    this.store.removeAll(this.collection);
+  async deleteAllPlaylists() {
+    await this.store.removeAll(this.collection);
   },
 
-  async addSong(id, song) {
-    const playlist = await this.getPlaylist(id);
+  async addSong(playlist, song) {
+    if (!playlist.songs) {
+      playlist.songs = [];
+    }
+    song.id = v4();
     playlist.songs.push(song);
 
     let duration = 0;
@@ -47,8 +51,7 @@ export const playlistStore = {
     await this.store.save();
   },
 
-  async removeSong(id, songId) {
-    const playlist = await this.getPlaylist(id);
+  async removeSong(playlist, songId) {
     const songs = playlist.songs;
     lodash.remove(songs, { id: songId });
     await this.store.save();

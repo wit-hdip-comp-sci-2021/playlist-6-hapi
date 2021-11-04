@@ -2,7 +2,6 @@
 
 import { playlistStore } from "../models/playlist-store.js";
 import { playlistAnalytics } from "../utils/playlist-analytics.js";
-import { v4 } from "uuid";
 
 export const playlistController = {
   validationError: null,
@@ -22,23 +21,20 @@ export const playlistController = {
   },
 
   async deleteSong(request, response) {
-    const playlistId = request.params.id;
-    const songId = request.params.songid;
-    await playlistStore.removeSong(playlistId, songId);
-    return response.redirect("/playlist/" + playlistId);
+    const playlist = await playlistStore.getPlaylist(request.params.id);
+    await playlistStore.removeSong(playlist, request.params.songid);
+    return response.redirect("/playlist/" + playlist.id);
   },
 
   async addSong(request, response) {
-    const playlistId = request.params.id;
-    const playlist = await playlistStore.getPlaylist(playlistId);
+    const playlist = await playlistStore.getPlaylist(request.params.id);
     const newSong = {
-      id: v4(),
       title: request.payload.title,
       artist: request.payload.artist,
       duration: Number(request.payload.duration)
     };
-    await playlistStore.addSong(playlistId, newSong);
-    return response.redirect("/playlist/" + playlistId);
+    await playlistStore.addSong(playlist, newSong);
+    return response.redirect("/playlist/" + playlist.id);
   }
 };
 
