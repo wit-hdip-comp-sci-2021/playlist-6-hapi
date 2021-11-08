@@ -4,7 +4,6 @@ import { v4 } from "uuid";
 import lodash from "lodash";
 
 export let userMemStore = {
-
   store: [],
 
   async getAllUsers() {
@@ -18,11 +17,11 @@ export let userMemStore = {
   },
 
   async getUserById(id) {
-    return lodash.find(this.store, { _id:id} );
+    return lodash.find(this.store, { _id: id });
   },
 
   async getUserByEmail(email) {
-   return lodash.find(this.store, { email: email });
+    return lodash.find(this.store, { email: email });
   },
 
   async deleteUserById(id) {
