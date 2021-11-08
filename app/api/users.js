@@ -32,7 +32,7 @@ export const Users = {
         }
         return user;
       } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+        return Boom.serverUnavailable("No User with this id");
       }
     },
     tags: ["api"],

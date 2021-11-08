@@ -21,13 +21,6 @@ export class JsonStore {
     return objects;
   }
 
-  async findBy(collection, filter) {
-    await this.db.read();
-    const objects = this.db.data[collection];
-    const results = lodash.filter(objects, filter);
-    return results;
-  }
-
   async findOneBy(collection, filter) {
     await this.db.read();
     const objects = this.db.data[collection];
@@ -54,4 +47,3 @@ export class JsonStore {
     await this.db.write();
   }
 }
-
