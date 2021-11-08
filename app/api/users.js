@@ -1,6 +1,6 @@
 "use strict";
 
-import { userStore } from "../models/user-store.js";
+import { db } from "../models/db.js";
 import Boom from "@hapi/boom";
 import Joi from "Joi";
 import { User, UserArray, UserCredentials, UserDetails, Uuid } from "../models/joi-schemas.js";
@@ -10,7 +10,7 @@ export const Users = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const users = await userStore.getAllUsers();
+        const users = await db.userStore.getAllUsers();
         return users;
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -26,7 +26,7 @@ export const Users = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const user = await userStore.getUserById(request.params.id);
+        const user = await db.userStore.getUserById(request.params.id);
         if (!user) {
           return Boom.notFound("No User with this id");
         }
@@ -38,11 +38,20 @@ export const Users = {
     tags: ["api"],
     description: "Get a specific user",
     notes: "Returns user details",
-    response: { schema: User },
     validate: {
       params: Joi.object({
         id: Uuid
       })
+    },
+    response: {
+      schema: User,
+      options: {
+        abortEarly: false
+      },
+      failAction: function(request, h, error) {
+        console.log(error.message);
+        return Boom.badData();
+      }
     }
   },
 
@@ -50,8 +59,7 @@ export const Users = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const user = request.payload;
-        await userStore.addUser(user);
+        const user = await db.userStore.addUser(request.payload);
         if (user) {
           return h.response(user).code(201);
         }
@@ -66,14 +74,23 @@ export const Users = {
     validate: {
       payload: UserDetails
     },
-    response: { schema: User }
+    response: {
+      schema: User,
+      options: {
+        abortEarly: false
+      },
+      failAction: function(request, h, error) {
+        console.log(error.message);
+        return Boom.badData();
+      }
+    }
   },
 
   deleteAll: {
     auth: false,
     handler: async function(request, h) {
       try {
-        await userStore.deleteAll();
+        await db.userStore.deleteAll();
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -87,7 +104,7 @@ export const Users = {
     auth: false,
     handler: async function(request, h) {
       try {
-        await userStore.deleteUserById(request.params.id);
+        await db.userStore.deleteUserById(request.params.id);
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -101,7 +118,7 @@ export const Users = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const user = await userStore.getUserByEmail(request.payload.email);
+        const user = await db.userStore.getUserByEmail(request.payload.email);
         if (user) {
           return h.response(user).code(200);
         } else {

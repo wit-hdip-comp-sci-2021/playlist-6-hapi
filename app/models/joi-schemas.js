@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const Uuid = Joi.string().uuid().description("a valid UUID");
+export const Uuid = Joi.string().description("a valid ID");
 export const RequiredUuid = Joi.string().uuid().required().description("a valid UUID");
 
 export const UserCredentials = Joi.object().keys({
@@ -14,7 +14,8 @@ export const UserDetails = UserCredentials.keys({
 }).label("User Details");
 
 export const User = UserDetails.keys({
-  id: Uuid
+  _id: Joi.alternatives().try(Joi.string(), Joi.object()),
+  __v: Joi.number()
 }).label("User");
 
 export const UserArray = Joi.array().items(User).label("User Array");

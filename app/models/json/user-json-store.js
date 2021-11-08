@@ -3,8 +3,8 @@
 import { JsonStore } from "./json-store.js";
 import { v4 } from "uuid";
 
-export const userStore = {
-  store: new JsonStore("./app/models/user-store.json", { users: [] }),
+export const userJsonStore = {
+  store: new JsonStore("./app/models/json/users.json", { users: [] }),
   collection: "users",
 
   async getAllUsers() {
@@ -12,12 +12,13 @@ export const userStore = {
   },
 
   async addUser(user) {
-    user.id = v4();
+    user._id = v4();
     this.store.add(this.collection, user);
+    return user;
   },
 
   async getUserById(id) {
-    return this.store.findOneBy(this.collection, { id: id });
+    return this.store.findOneBy(this.collection, { _id: id });
   },
 
   async getUserByEmail(email) {

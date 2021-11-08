@@ -4,8 +4,8 @@ import lodash from "lodash";
 import { JsonStore } from "./json-store.js";
 import { v4 } from "uuid";
 
-export const playlistStore = {
-  store: new JsonStore("./app/models/playlist-store.json", {
+export const playlistJsonStore = {
+  store: new JsonStore("./app/models/json/playlists.json", {
     playlistCollection: []
   }),
   collection: "playlistCollection",

@@ -1,12 +1,12 @@
 "use strict";
 
-import { playlistStore } from "../models/playlist-store.js";
+import { playlistJsonStore } from "../models/json/playlist-json-store.js";
 import { accountsController } from "./accounts-controller.js";
 
 export const dashboardController = {
   async index(request, response) {
     const loggedInUser = request.auth.credentials;
-    const playlists = await playlistStore.getUserPlaylists(loggedInUser);
+    const playlists = await playlistJsonStore.getUserPlaylists(loggedInUser);
     const viewData = {
       title: "Playlist Dashboard",
       playlists: playlists
@@ -15,8 +15,8 @@ export const dashboardController = {
   },
 
   async deletePlaylist(request, response) {
-    const playlist = await playlistStore.getPlaylist(request.params.id);
-    await playlistStore.removePlaylist(playlist);
+    const playlist = await playlistJsonStore.getPlaylist(request.params.id);
+    await playlistJsonStore.removePlaylist(playlist);
     return response.redirect("/dashboard");
   },
 
@@ -27,7 +27,7 @@ export const dashboardController = {
       title: request.payload.title,
       songs: []
     };
-    playlistStore.addPlaylist(newPlayList);
+    playlistJsonStore.addPlaylist(newPlayList);
     return response.redirect("/dashboard");
   }
 };

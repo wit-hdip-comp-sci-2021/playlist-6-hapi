@@ -8,6 +8,7 @@ import Handlebars from "handlebars";
 import dotenv from "dotenv";
 import { routes } from "./routes.js";
 import { accountsController } from "./app/controllers/accounts-controller.js";
+import {db} from "./app/models/db.js";
 import HapiSwagger from "hapi-swagger";
 import * as pack from "./package.json";
 
@@ -77,6 +78,7 @@ async function init() {
   server.auth.default("session");
   server.route(routes);
   server.route(apiRoutes);
+  db.init();
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 }

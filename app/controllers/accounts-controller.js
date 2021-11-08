@@ -1,6 +1,6 @@
 "use strict";
 import { v4 as uuidv4 } from "uuid";
-import { userStore } from "../models/user-store.js";
+import { userJsonStore } from "../models/json/user-json-store.js";
 import Boom from "@hapi/boom";
 import { UserCredentials, UserDetails } from "../models/joi-schemas.js";
 
@@ -29,7 +29,7 @@ export const accountsController = {
     handler: async function(request, h) {
       try {
         const user = request.payload;
-        await userStore.addUser(user);
+        await userJsonStore.addUser(user);
         return h.redirect("/");
       } catch (err) {
         return h.view("signup-view", { errors: [{ message: err.message }] });
@@ -54,7 +54,7 @@ export const accountsController = {
     handler: async function(request, h) {
       const { email, password } = request.payload;
       try {
-        const user = await userStore.getUserByEmail(email);
+        const user = await userJsonStore.getUserByEmail(email);
         if (!user) {
           const message = "Email address is not registered";
           throw Boom.unauthorized(message);
@@ -74,7 +74,7 @@ export const accountsController = {
   },
 
   async validate(request, session) {
-    const user = await userStore.getUserById(session.id);
+    const user = await userJsonStore.getUserById(session.id);
     if (!user) {
       return { valid: false };
     }

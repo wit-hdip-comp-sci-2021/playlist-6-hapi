@@ -1,13 +1,13 @@
 "use strict";
 
-import { playlistStore } from "../models/playlist-store.js";
+import { playlistJsonStore } from "../models/json/playlist-json-store.js";
 
 export const songController = {
   async index(request, response) {
     const playlistId = request.params.id;
     const songId = request.params.songid;
-    const playlist = await playlistStore.getPlaylist(playlistId);
-    const song = await playlistStore.getSong(playlistId, songId);
+    const playlist = await playlistJsonStore.getPlaylist(playlistId);
+    const song = await playlistJsonStore.getSong(playlistId, songId);
     const viewData = {
       title: "Edit Song",
       playlist: playlist,
@@ -19,13 +19,13 @@ export const songController = {
   async update(request, response) {
     const playlistId = request.params.id;
     const songId = request.params.songid;
-    const song = await playlistStore.getSong(playlistId, songId);
+    const song = await playlistJsonStore.getSong(playlistId, songId);
     const newSong = {
       title: request.payload.title,
       artist: request.payload.artist,
       duration: Number(request.payload.duration)
     };
-    await playlistStore.updateSong(song, newSong);
+    await playlistJsonStore.updateSong(song, newSong);
     return response.redirect("/playlist/" + playlistId);
   }
 };

@@ -4,7 +4,7 @@ import { assert } from "chai";
 import * as fixtures from "./fixtures.json";
 import { PlaylistService } from "./playlist-service.js";
 import lowdash from "lodash";
-
+import { v4 } from "uuid";
 suite("User API tests", function() {
 
   let newUser = fixtures.default.newUser;
@@ -56,16 +56,22 @@ suite("User API tests", function() {
     }
   });
 
-  test("create multiple playlists", async function() {
-    const user = await playlistService.authenticate(credentials);
-    for (let playlist of  fixtures.default.playlists) {
-      playlist.userid = user.id;
-      await playlistService.createPlaylist(playlist);
-    }
-    let playlists = await playlistService.getPlaylists();
-    assert.equal(fixtures.default.playlists.length, playlists.length);
-    await playlistService.deletePlaylists();
-    playlists = await playlistService.getPlaylists();
-    assert.equal(playlists.length, 0);
-  });
+  // test("create multiple playlists", async function() {
+  //   const user = await playlistService.authenticate(credentials);
+  //   for (let playlist of  fixtures.default.playlists) {
+  //     playlist.userid = user.id;
+  //     await playlistService.createPlaylist(playlist);
+  //   }
+  //   let playlists = await playlistService.getPlaylists();
+  //   assert.equal(fixtures.default.playlists.length, playlists.length);
+  //   await playlistService.deletePlaylists();
+  //   playlists = await playlistService.getPlaylists();
+  //   assert.equal(playlists.length, 0);
+  // });
+
+  // test("remove non-existant playlist", async function() {
+  //   const user = await playlistService.authenticate(credentials);
+  //   user.id = v4();
+  //   const response = await playlistService.deletePlaylist(playlist);
+  // });
 });

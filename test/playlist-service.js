@@ -23,8 +23,12 @@ export class PlaylistService {
   }
 
   async createUser(newUser) {
-    const res = await axios.post(this.baseUrl + "/api/users", newUser);
-    return res.data;
+    try {
+      const res = await axios.post(this.baseUrl + "/api/users", newUser);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async deleteAllUsers() {

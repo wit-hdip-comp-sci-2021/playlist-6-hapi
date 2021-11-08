@@ -1,7 +1,7 @@
 "use strict";
 
 import Boom from "@hapi/boom";
-import { playlistStore } from "../models/playlist-store.js";
+import { playlistJsonStore } from "../models/json/playlist-json-store.js";
 import { Playlist, PlaylistArray, Uuid } from "../models/joi-schemas.js";
 import Joi from "joi";
 
@@ -12,7 +12,7 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlists = await playlistStore.getAllPlaylists();
+        const playlists = await playlistJsonStore.getAllPlaylists();
         return playlists;
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -28,7 +28,7 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlist = await playlistStore.getPlaylist(request.params.id);
+        const playlist = await playlistJsonStore.getPlaylist(request.params.id);
         if (!playlist) {
           return Boom.notFound("No Playlist with this id");
         }
@@ -53,7 +53,7 @@ export const Playlists = {
     handler: async function(request, h) {
       try {
         const playlist = request.payload;
-        await playlistStore.addPlaylist(playlist);
+        await playlistJsonStore.addPlaylist(playlist);
         if (playlist) {
           return h.response(playlist).code(201);
         }
@@ -75,8 +75,8 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlist = await playlistStore.getPlaylist(request.params.id);
-        await playlistStore.removePlaylist(playlist);
+        const playlist = await playlistJsonStore.getPlaylist(request.params.id);
+        await playlistJsonStore.removePlaylist(playlist);
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -90,7 +90,7 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        await playlistStore.deleteAllPlaylists();
+        await playlistJsonStore.deleteAllPlaylists();
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
