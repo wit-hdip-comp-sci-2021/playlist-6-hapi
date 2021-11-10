@@ -23,12 +23,8 @@ export class PlaylistService {
   }
 
   async createUser(newUser) {
-    try {
-      const res = await axios.post(this.baseUrl + "/api/users", newUser);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await axios.post(this.baseUrl + "/api/users", newUser);
+    return res.data;
   }
 
   async deleteAllUsers() {
@@ -61,8 +57,8 @@ export class PlaylistService {
     return response.data;
   }
 
-  async deletePlaylist(playlist) {
-    const response = await axios.delete(this.baseUrl + "/api/playlists/" + playlist.id);
+  async deletePlaylist(id) {
+    const response = await axios.delete(this.baseUrl + "/api/playlists/" + id);
     return response;
   }
 }

@@ -1,7 +1,6 @@
 import Joi from "joi";
 
-export const Uuid = Joi.string().description("a valid ID");
-export const RequiredUuid = Joi.string().uuid().required().description("a valid UUID");
+export const Id = Joi.alternatives().try(Joi.string(), Joi.object()).description("a valid ID");
 
 export const UserCredentials = Joi.object().keys({
   email: Joi.string().email().example("homer@simpson.com").required(),
@@ -14,23 +13,24 @@ export const UserDetails = UserCredentials.keys({
 }).label("User Details");
 
 export const User = UserDetails.keys({
-  _id: Joi.alternatives().try(Joi.string(), Joi.object()),
+  _id: Id,
   __v: Joi.number()
 }).label("User");
 
 export const UserArray = Joi.array().items(User).label("User Array");
 
 export const Song = Joi.object().keys({
-  id: Uuid,
+  _id: Id,
   title: Joi.string().example("Piano Concerto No. 4").required(),
   artist: Joi.string().example("Beethoven").required(),
   duration: Joi.number().example(12).required()
 });
 
 export const Playlist = Joi.object().keys({
-  id: Uuid,
-  userid: RequiredUuid,
+  _id: Id,
+  userid: Id,
   title: Joi.string().example("Playlist Title").required(),
+  __v: Joi.number()
   //songs : Joi.array().items(Song).label("Song Array").required(),
 });
 

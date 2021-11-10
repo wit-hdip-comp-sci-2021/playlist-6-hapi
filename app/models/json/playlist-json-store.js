@@ -10,21 +10,21 @@ export const playlistJsonStore = {
   }),
   collection: "playlistCollection",
 
-  getAllPlaylists() {
+  async getAllPlaylists() {
     return this.store.findAll(this.collection);
   },
 
-  async getPlaylist(id) {
-    return await this.store.findOneBy(this.collection, { id: id });
+  async getPlaylistById(id) {
+    return await this.store.findOneBy(this.collection, { _id: id });
   },
 
   async getUserPlaylists(user) {
     return await this.store.findBy(this.collection, { userid: user.id });
   },
 
-  addPlaylist(playlist) {
-    playlist.id = v4();
-    this.store.add(this.collection, playlist);
+  async addPlaylist(playlist) {
+    playlist._id = v4();
+    return await this.store.add(this.collection, playlist);
   },
 
   async removePlaylist(playlist) {

@@ -1,6 +1,5 @@
 "use strict";
-import { v4 as uuidv4 } from "uuid";
-import { userJsonStore } from "../models/json/user-json-store.js";
+import { db } from "../models/db.js";
 import Boom from "@hapi/boom";
 import { UserCredentials, UserDetails } from "../models/joi-schemas.js";
 
@@ -29,7 +28,7 @@ export const accountsController = {
     handler: async function(request, h) {
       try {
         const user = request.payload;
-        await userJsonStore.addUser(user);
+        await db.userStore.addUser(user);
         return h.redirect("/");
       } catch (err) {
         return h.view("signup-view", { errors: [{ message: err.message }] });
@@ -54,12 +53,12 @@ export const accountsController = {
     handler: async function(request, h) {
       const { email, password } = request.payload;
       try {
-        const user = await userJsonStore.getUserByEmail(email);
+        const user = await db.userStore.getUserByEmail(email);
         if (!user) {
           const message = "Email address is not registered";
           throw Boom.unauthorized(message);
         }
-        request.cookieAuth.set({ id: user.id });
+        request.cookieAuth.set({ id: user._id });
         return h.redirect("/dashboard");
       } catch (err) {
         return h.view("login-view", { errors: [{ message: err.message }] });
@@ -74,7 +73,7 @@ export const accountsController = {
   },
 
   async validate(request, session) {
-    const user = await userJsonStore.getUserById(session.id);
+    const user = await db.userStore.getUserById(session.id);
     if (!user) {
       return { valid: false };
     }

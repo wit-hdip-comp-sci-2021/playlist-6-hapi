@@ -2,22 +2,22 @@
 
 import { User } from "./user.js";
 
-export let userMongoStore = {
+export const userMongoStore = {
 
   async getAllUsers() {
     const users = await User.find().lean();
     return users;
   },
 
+  async getUserById(id) {
+    const user = await User.findOne({ _id: id }).lean();
+    return user
+  },
+
   async addUser(user) {
     const newUser = new User(user);
     const userObj = await newUser.save();
     return await this.getUserById(userObj._id);
-  },
-
-  async getUserById(id) {
-    const user = await User.findOne({ _id: id }).lean();
-    return user
   },
 
   async getUserByEmail(email) {

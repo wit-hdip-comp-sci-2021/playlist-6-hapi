@@ -1,9 +1,10 @@
 "use strict";
 
 import Boom from "@hapi/boom";
-import { playlistJsonStore } from "../models/json/playlist-json-store.js";
-import { Playlist, PlaylistArray, Uuid } from "../models/joi-schemas.js";
+import { Id, Playlist, PlaylistArray } from "../models/joi-schemas.js";
 import Joi from "joi";
+import { db } from "../models/db.js";
+import { validationError } from "../utils/logger.js";
 
 // https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 
@@ -12,14 +13,17 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlists = await playlistJsonStore.getAllPlaylists();
+        const playlists = await db.playlistStore.getAllPlaylists();
         return playlists;
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
-    response: { schema: PlaylistArray },
+    response: {
+      schema: PlaylistArray,
+      failAction: validationError
+    },
     description: "Get all playlists",
     notes: "Returns all playlists"
   },
@@ -28,24 +32,26 @@ export const Playlists = {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlist = await playlistJsonStore.getPlaylist(request.params.id);
+        const playlist = await db.playlistStore.getPlaylist(request.params.id);
         if (!playlist) {
           return Boom.notFound("No Playlist with this id");
         }
         return playlist;
       } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+        return Boom.serverUnavailable("No Playlist with this id");
       }
     },
     tags: ["api"],
     description: "Find a Playlist",
     notes: "Returns a playlist",
     validate: {
-      params: Joi.object({
-        id: Uuid
-      })
+      params: Id,
+      failAction: validationError
     },
-    response: { schema: Playlist }
+    response: {
+      schema: Playlist,
+      failAction: validationError
+    }
   },
 
   create: {
@@ -53,9 +59,9 @@ export const Playlists = {
     handler: async function(request, h) {
       try {
         const playlist = request.payload;
-        await playlistJsonStore.addPlaylist(playlist);
-        if (playlist) {
-          return h.response(playlist).code(201);
+        const newPlaylist = await db.playlistStore.addPlaylist(playlist);
+        if (newPlaylist) {
+          return h.response(newPlaylist).code(201);
         }
         return Boom.badImplementation("error creating playlist");
       } catch (err) {
@@ -66,31 +72,42 @@ export const Playlists = {
     description: "Create a Playlist",
     notes: "Returns the newly created playlist",
     validate: {
-      payload: Playlist
+      payload: Playlist,
+      failAction: validationError
     },
-    response: { schema: Playlist }
+    response: {
+      schema: Playlist,
+      failAction: validationError
+    }
   },
 
   deleteOne: {
     auth: false,
     handler: async function(request, h) {
       try {
-        const playlist = await playlistJsonStore.getPlaylist(request.params.id);
-        await playlistJsonStore.removePlaylist(playlist);
+        const playlist = await db.playlistStore.getPlaylistById(request.params.id);
+        if (!playlist) {
+          return Boom.notFound("No Playlist with this id");
+        }
+        await db.playlistStore.removePlaylist(playlist);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+        return Boom.serverUnavailable("No Playlist with this id");
       }
     },
     tags: ["api"],
-    description: "Delete all users"
+    description: "Delete a playlist",
+    validate: {
+      params: Id,
+      failAction: validationError
+    },
   },
 
   deleteAll: {
     auth: false,
     handler: async function(request, h) {
       try {
-        await playlistJsonStore.deleteAllPlaylists();
+        await db.playlistStore.deleteAllPlaylists();
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -98,5 +115,5 @@ export const Playlists = {
     },
     tags: ["api"],
     description: "Delete all Playlists"
-  },
+  }
 };

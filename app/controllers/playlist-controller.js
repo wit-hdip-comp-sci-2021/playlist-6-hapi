@@ -2,13 +2,13 @@
 
 import { playlistJsonStore } from "../models/json/playlist-json-store.js";
 import { playlistAnalytics } from "../utils/playlist-analytics.js";
+import { db } from "../models/db.js";
 
 export const playlistController = {
   validationError: null,
 
   async index(request, response) {
-    const playlistId = request.params.id;
-    const playlist = await playlistJsonStore.getPlaylist(playlistId);
+    const playlist = await db.playlistStore.getPlaylistById(request.params.id);
     const viewData = {
       title: "Playlist",
       playlist: playlist,
@@ -21,7 +21,7 @@ export const playlistController = {
   },
 
   async deleteSong(request, response) {
-    const playlist = await playlistJsonStore.getPlaylist(request.params.id);
+    const playlist = await db.playlistStore.getPlaylist(request.params.id);
     await playlistJsonStore.removeSong(playlist, request.params.songid);
     return response.redirect("/playlist/" + playlist.id);
   },

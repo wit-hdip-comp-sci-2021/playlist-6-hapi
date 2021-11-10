@@ -33,6 +33,7 @@ export class JsonStore {
     const objects = this.db.data[collection];
     objects.push(obj);
     await this.db.write();
+    return obj;
   }
 
   async remove(collection, obj) {
