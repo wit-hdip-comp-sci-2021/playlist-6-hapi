@@ -15,7 +15,7 @@ export const playlistMemStore = {
   },
 
   async getUserPlaylists(userid) {
-    return lodash.find(this.store, { userid: userid });
+    return lodash.filter(this.store, { userid: userid });
   },
 
   addPlaylist(playlist) {

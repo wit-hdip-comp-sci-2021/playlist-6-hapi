@@ -18,8 +18,8 @@ export const playlistJsonStore = {
     return await this.store.findOneBy(this.collection, { _id: id });
   },
 
-  async getUserPlaylists(user) {
-    return await this.store.findBy(this.collection, { userid: user.id });
+  async getUserPlaylists(userId) {
+    return await this.store.findBy(this.collection, { userid: userId });
   },
 
   async addPlaylist(playlist) {
@@ -27,7 +27,8 @@ export const playlistJsonStore = {
     return await this.store.add(this.collection, playlist);
   },
 
-  async removePlaylist(playlist) {
+  async removePlaylist(id) {
+    const playlist = await this.getPlaylistById(id);
     await this.store.remove(this.collection, playlist);
   },
 

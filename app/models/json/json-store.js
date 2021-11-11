@@ -21,6 +21,13 @@ export class JsonStore {
     return objects;
   }
 
+  async findBy(collection, filter) {
+    await this.db.read();
+    const objects = this.db.data[collection];
+    const result = lodash.filter(objects, filter);
+    return result;
+  }
+
   async findOneBy(collection, filter) {
     await this.db.read();
     const objects = this.db.data[collection];

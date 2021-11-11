@@ -89,7 +89,7 @@ export const Playlists = {
         if (!playlist) {
           return Boom.notFound("No Playlist with this id");
         }
-        await db.playlistStore.removePlaylist(playlist);
+        await db.playlistStore.removePlaylist(playlist._id);
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("No Playlist with this id");

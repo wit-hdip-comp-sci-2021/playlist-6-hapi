@@ -11,8 +11,8 @@ export const db = {
   playListStore: null,
 
   init() {
-    this.userStore = userMongoStore;
-    this.playlistStore = playlistMongoStore;
+    this.userStore = userMemStore;
+    this.playlistStore = playlistMemStore;
     initMongo();
   }
 };
