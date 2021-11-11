@@ -1,6 +1,5 @@
 "use strict";
 
-import lodash from "lodash";
 import { v4 } from "uuid";
 import { JSONFile, Low } from "lowdb";
 
@@ -24,92 +23,52 @@ export const playlistJsonStore = {
 
   async getPlaylistById(id) {
     await db.read();
-    return lodash.find(db.data.playlists, { _id: id });
+    return db.data.playlists.find (playlist => playlist._id == id)
   },
 
-  async getUserPlaylists(userId) {
+  async getUserPlaylists(userid) {
     await db.read();
-    return lodash.find(db.data.playlists, { userid: userid });
+    return db.data.playlists.filter (playlist => playlist.userid == userid)
   },
 
   async deletePlaylistById(id) {
     await db.read();
-    const playlist = lodash.find(db.data.playlists, { _id: id });
-    lodash.remove(db.data.playlists, playlist);
+    const index = db.data.playlists.findIndex (playlist => playlist._id == id)
+    db.data.playlists.splice(index, 1);
     await db.write();
   },
 
   async deleteAllPlaylists() {
     db.data.playlists = [];
     await db.write();
+  },
+
+  async addSong(playlist, song) {
+    if (!playlist.songs) {
+      playlist.songs = [];
+    }
+    song._id = v4();
+    playlist.songs.push(song);
+    await db.write();
+  },
+
+  async removeSong(playlist, songId) {
+    const songs = playlist.songs;
+    const index = songs.findIndex (song => song._id == songId)
+    songs.splice(index, 1);
+    await db.write();
+  },
+
+  async getSong(id, songId) {
+    const playList = await this.getPlaylistById(id);
+    const songs = playList.songs.filter(song => song.id == songId);
+    return songs[0];
+  },
+
+  async updateSong(song, updatedSong) {
+    song.title = updatedSong.title;
+    song.artist = updatedSong.artist;
+    song.duration = updatedSong.duration;
+    await db.write();
   }
 };
-
-
-// export const playlistJsonStore = {
-//   store: new JsonStore("./app/models/json/playlists.json", {
-//     playlistCollection: []
-//   }),
-//   collection: "playlistCollection",
-//
-//   async getAllPlaylists() {
-//     return this.store.findAll(this.collection);
-//   },
-//
-//   async getPlaylistById(id) {
-//     return await this.store.findOneBy(this.collection, { _id: id });
-//   },
-//
-//   async getUserPlaylists(userId) {
-//     return await this.store.findBy(this.collection, { userid: userId });
-//   },
-//
-//   async addPlaylist(playlist) {
-//     playlist._id = v4();
-//     return await this.store.add(this.collection, playlist);
-//   },
-//
-//   async removePlaylist(id) {
-//     const playlist = await this.getPlaylistById(id);
-//     await this.store.remove(this.collection, playlist);
-//   },
-//
-//   async deleteAllPlaylists() {
-//     await this.store.removeAll(this.collection);
-//   },
-//
-//   async addSong(playlist, song) {
-//     if (!playlist.songs) {
-//       playlist.songs = [];
-//     }
-//     song.id = v4();
-//     playlist.songs.push(song);
-//
-//     let duration = 0;
-//     for (let i = 0; i < playlist.songs.length; i++) {
-//       duration += playlist.songs[i].duration;
-//     }
-//
-//     playlist.duration = duration;
-//     await this.store.save();
-//   },
-//
-//   async removeSong(playlist, songId) {
-//     const songs = playlist.songs;
-//     lodash.remove(songs, { id: songId });
-//     await this.store.save();
-//   },
-//
-//   async getSong(id, songId) {
-//     const playList = await this.store.findOneBy(this.collection, { id: id });
-//     const songs = playList.songs.filter(song => song.id == songId);
-//     return songs[0];
-//   },
-//
-//   async updateSong(song, updatedSong) {
-//     song.title = updatedSong.title;
-//     song.artist = updatedSong.artist;
-//     song.duration = updatedSong.duration;
-//     await this.store.save();
-//   }
-// };

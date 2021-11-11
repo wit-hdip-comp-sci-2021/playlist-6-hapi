@@ -24,18 +24,18 @@ export const userJsonStore = {
 
   async getUserById(id) {
     await db.read();
-    return lodash.find(db.data.users, { _id: id });
+    return db.data.users.find (user => user._id == id)
   },
 
   async getUserByEmail(email) {
     await db.read();
-    return lodash.find(db.data.users, { email: email });
+    return db.data.users.find (user => user.email == email)
   },
 
   async deleteUserById(id) {
     await db.read();
-    const user = lodash.find(db.data.users, { _id: id });
-    lodash.remove(db.data.users, user);
+    const index = db.data.users.findIndex (user => user._id == id)
+    db.data.users.splice(index, 1);
     await db.write();
   },
 

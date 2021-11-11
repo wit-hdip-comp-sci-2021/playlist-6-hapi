@@ -1,35 +1,35 @@
 "use strict";
 
 import { v4 } from "uuid";
-import lodash from "lodash";
 
-export let userMemStore = {
-  store: [],
+let users = [];
+
+export const userMemStore = {
 
   async getAllUsers() {
-    return this.store;
+    return users;
   },
 
   async addUser(user) {
     user._id = v4();
-    this.store.push(user);
+    users.push(user);
     return user;
   },
 
   async getUserById(id) {
-    return lodash.find(this.store, { _id: id });
+    return users.find(user => user._id == id);
   },
 
   async getUserByEmail(email) {
-    return lodash.find(this.store, { email: email });
+    return users.find(user => user.email == email);
   },
 
   async deleteUserById(id) {
-    const user = await this.getUserById(id);
-    lodash.remove(this.store, user);
+    const index = users.findIndex(user => user._id == id);
+    users.splice(index, 1);
   },
 
   async deleteAll() {
-    this.store = [];
+    users = [];
   }
 };

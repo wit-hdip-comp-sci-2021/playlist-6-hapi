@@ -1,36 +1,35 @@
 "use strict";
 
-import lodash from "lodash";
 import { v4 } from "uuid";
+let playlists = [];
 
 export const playlistMemStore = {
-  store: [],
 
-  getAllPlaylists() {
-    return this.store;
+  async getAllPlaylists() {
+    return playlists;
   },
 
-  async getPlaylistById(id) {
-    return lodash.find(this.store, { _id: id });
-  },
-
-  async getUserPlaylists(userid) {
-    return lodash.filter(this.store, { userid: userid });
-  },
-
-  addPlaylist(playlist) {
+  async addPlaylist(playlist) {
     playlist._id = v4();
-    this.store.push(playlist);
+    playlists.push(playlist);
     return playlist;
   },
 
+  async getPlaylistById(id) {
+    return playlists.find (playlist => playlist._id == id)
+  },
+
+  async getUserPlaylists(userid) {
+    return playlists.filter (playlist => playlist.userid == userid)
+  },
+
   async deletePlaylistById(id) {
-    const playlist = await this.getPlaylistById(id);
-    lodash.remove(this.store, playlist);
+    const index = playlists.findIndex (playlist => playlist._id == id)
+    playlists.splice(index, 1);
   },
 
   async deleteAllPlaylists() {
-    this.store = [];
+    playlists = [];
   },
 
   async addSong(playlist, song) {
@@ -39,23 +38,17 @@ export const playlistMemStore = {
     }
     song._id = v4();
     playlist.songs.push(song);
-
-    let duration = 0;
-    for (let i = 0; i < playlist.songs.length; i++) {
-      duration += playlist.songs[i].duration;
-    }
-
-    playlist.duration = duration;
   },
 
   async removeSong(playlist, songId) {
     const songs = playlist.songs;
-    lodash.remove(songs, { _id: songId });
+    const index = songs.findIndex (song => song._id == songId)
+    songs.splice(index, 1);
   },
 
   async getSong(id, songId) {
-    const playList = this.getPlaylistById(id);
-    const songs = playList.songs.filter(song => song._id == songId);
+    const playList = await this.getPlaylistById(id);
+    const songs = playList.songs.filter(song => song.id == songId);
     return songs[0];
   },
 
