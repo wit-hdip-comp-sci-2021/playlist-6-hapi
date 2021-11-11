@@ -25,7 +25,7 @@ export const playlistMongoStore = {
     return playlist;
   },
 
-  async removePlaylist(id) {
+  async deletePlaylistById(id) {
     await Playlist.deleteOne({ _id: id });
   },
 

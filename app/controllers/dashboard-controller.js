@@ -15,7 +15,7 @@ export const dashboardController = {
 
   async deletePlaylist(request, response) {
     const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-    await db.playlistStore.removePlaylist(playlist._id);
+    await db.playlistStore.deletePlaylistById(playlist._id);
     return response.redirect("/dashboard");
   },
 

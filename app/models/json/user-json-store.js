@@ -11,7 +11,7 @@ export const userJsonStore = {
 
   async getAllUsers() {
     await db.read();
-    return db.data["users"];
+    return db.data.users;
   },
 
   async addUser(user) {

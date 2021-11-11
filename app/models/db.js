@@ -12,7 +12,7 @@ export const db = {
 
   init() {
     this.userStore = userJsonStore;
-    this.playlistStore = playlistMemStore;
+    this.playlistStore = playlistJsonStore;
     initMongo();
   }
 };

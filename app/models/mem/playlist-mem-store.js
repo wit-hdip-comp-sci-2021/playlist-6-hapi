@@ -24,7 +24,7 @@ export const playlistMemStore = {
     return playlist;
   },
 
-  async removePlaylist(id) {
+  async deletePlaylistById(id) {
     const playlist = await this.getPlaylistById(id);
     lodash.remove(this.store, playlist);
   },
