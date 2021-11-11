@@ -1,35 +1,46 @@
 "use strict";
 
-import { JsonStore } from "./json-store.js";
 import { v4 } from "uuid";
+import { JSONFile, Low } from "lowdb";
+import lodash from "lodash";
+
+const db = new Low(new JSONFile("./app/models/json/users.json"));
+db.data = { users: [] };
 
 export const userJsonStore = {
-  store: new JsonStore("./app/models/json/users.json", { users: [] }),
 
   async getAllUsers() {
-    return this.store.findAll("users");
+    await db.read();
+    return db.data["users"];
   },
 
   async addUser(user) {
+    await db.read();
     user._id = v4();
-    this.store.add("users", user);
+    db.data.users.push(user);
+    await db.write();
     return user;
   },
 
   async getUserById(id) {
-    return this.store.findOneBy("users", { _id: id });
+    await db.read();
+    return lodash.find(db.data.users, { _id: id });
   },
 
   async getUserByEmail(email) {
-    return await this.store.findOneBy("users", { email: email });
+    await db.read();
+    return lodash.find(db.data.users, { email: email });
   },
 
   async deleteUserById(id) {
-    const user = await this.getUserById(id);
-    await this.store.remove("users", user);
+    await db.read();
+    const user = lodash.find(db.data.users, { _id: id });
+    lodash.remove(db.data.users, user);
+    await db.write();
   },
 
   async deleteAll() {
-    await this.store.removeAll("users");
+    db.data.users = [];
+    await db.write();
   }
 };
