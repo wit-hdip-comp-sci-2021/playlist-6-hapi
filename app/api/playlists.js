@@ -1,8 +1,7 @@
 "use strict";
 
 import Boom from "@hapi/boom";
-import { Id, Playlist, PlaylistArray } from "../models/joi-schemas.js";
-import Joi from "joi";
+import { Id, Playlist, PlaylistArray } from "./schemas.js";
 import { db } from "../models/db.js";
 import { validationError } from "../utils/logger.js";
 
@@ -20,10 +19,7 @@ export const Playlists = {
       }
     },
     tags: ["api"],
-    response: {
-      schema: PlaylistArray,
-      failAction: validationError
-    },
+    response: { schema: PlaylistArray, failAction: validationError },
     description: "Get all playlists",
     notes: "Returns all playlists"
   },
@@ -44,14 +40,8 @@ export const Playlists = {
     tags: ["api"],
     description: "Find a Playlist",
     notes: "Returns a playlist",
-    validate: {
-      params: Id,
-      failAction: validationError
-    },
-    response: {
-      schema: Playlist,
-      failAction: validationError
-    }
+    validate: { params: Id, failAction: validationError },
+    response: { schema: Playlist, failAction: validationError }
   },
 
   create: {
@@ -71,14 +61,8 @@ export const Playlists = {
     tags: ["api"],
     description: "Create a Playlist",
     notes: "Returns the newly created playlist",
-    validate: {
-      payload: Playlist,
-      failAction: validationError
-    },
-    response: {
-      schema: Playlist,
-      failAction: validationError
-    }
+    validate: { payload: Playlist, failAction: validationError },
+    response: { schema: Playlist, failAction: validationError }
   },
 
   deleteOne: {
@@ -97,10 +81,7 @@ export const Playlists = {
     },
     tags: ["api"],
     description: "Delete a playlist",
-    validate: {
-      params: Id,
-      failAction: validationError
-    },
+    validate: { params: Id, failAction: validationError }
   },
 
   deleteAll: {

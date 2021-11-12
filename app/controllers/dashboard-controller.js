@@ -24,7 +24,6 @@ export const dashboardController = {
     const newPlayList = {
       userid: loggedInUser._id,
       title: request.payload.title,
-      songs: []
     };
     let obj = await db.playlistStore.addPlaylist(newPlayList);
     return response.redirect("/dashboard");

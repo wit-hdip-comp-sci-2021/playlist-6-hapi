@@ -1,7 +1,7 @@
 <table class="table is-fullwidth">
   <thead>
     <tr>
-      <th>Song</th>
+      <th>Track</th>
       <th>Artist</th>
       <th>Duration</th>
       <th></th>
@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each playlist.songs}}
+    {{#each playlist.tracks}}
       <tr>
         <td>
           {{title}}
@@ -21,12 +21,12 @@
           {{duration}}
         </td>
         <td>
-          <a href="/song/{{../playlist._id}}/editsong/{{_id}}" class="ui icon button">
+          <a href="/track/{{../playlist._id}}/edittrack/{{_id}}" class="ui icon button">
             <i class="fas fa-edit"></i>
           </a>
         </td>
         <td>
-          <a href="/playlist/{{../playlist._id}}/deletesong/{{_id}}" class="ui icon button">
+          <a href="/playlist/{{../playlist._id}}/deletetrack/{{_id}}" class="ui icon button">
             <i class="fas fa-trash"></i>
           </a>
         </td>

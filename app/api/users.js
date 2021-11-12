@@ -2,9 +2,8 @@
 
 import { db } from "../models/db.js";
 import Boom from "@hapi/boom";
-import { Id, User, UserArray, UserCredentials, UserDetails } from "../models/joi-schemas.js";
+import { Id, User, UserArray, UserCredentials, UserDetails } from "./schemas.js";
 import { validationError } from "../utils/logger.js";
-import Joi from "joi";
 
 export const Users = {
   find: {
@@ -18,10 +17,7 @@ export const Users = {
       }
     },
     tags: ["api"],
-    response: {
-      schema: UserArray,
-      failAction: validationError
-    },
+    response: { schema: UserArray, failAction: validationError },
     description: "Get all users",
     notes: "Returns all users"
   },
@@ -42,14 +38,8 @@ export const Users = {
     tags: ["api"],
     description: "Get a specific user",
     notes: "Returns user details",
-    validate: {
-      params: Id,
-      failAction: validationError
-    },
-    response: {
-      schema: User,
-      failAction: validationError
-    }
+    validate: { params: Id, failAction: validationError },
+    response: { schema: User, failAction: validationError }
   },
 
   create: {
@@ -68,13 +58,8 @@ export const Users = {
     tags: ["api"],
     description: "Create a User",
     notes: "Returns the newly created user",
-    validate: {
-      payload: UserDetails
-    },
-    response: {
-      schema: User,
-      failAction: validationError
-    }
+    validate: { payload: UserDetails },
+    response: { schema: User, failAction: validationError }
   },
 
   deleteAll: {
@@ -103,10 +88,7 @@ export const Users = {
     },
     tags: ["api"],
     description: "Delete all users",
-    validate: {
-      params: Id,
-      failAction: validationError
-    }
+    validate: { params: Id, failAction: validationError }
   },
 
   authenticate: {
@@ -125,13 +107,7 @@ export const Users = {
     },
     tags: ["api"],
     description: "Authenticate a user",
-    validate: {
-      payload: UserCredentials,
-      failAction: validationError
-    },
-    response: {
-      schema: User,
-      failAction: validationError
-    }
+    validate: { payload: UserCredentials, failAction: validationError },
+    response: { schema: User, failAction: validationError }
   }
 };

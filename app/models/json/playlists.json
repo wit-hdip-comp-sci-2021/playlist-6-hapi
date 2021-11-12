@@ -1,3 +1,43 @@
 {
-  "playlists": []
+  "playlists": [
+    {
+      "userid": "fb8e8fe4-1e9c-4925-a3a4-96c43d1a0a12",
+      "title": "www",
+      "songs": [],
+      "_id": "6ad901ef-2bfa-4557-bbb1-1a49dba3de62",
+      "tracks": [
+        {
+          "title": "ddd",
+          "artist": "ww",
+          "duration": null,
+          "_id": "c16222ba-8033-44c3-8541-401daec540ce"
+        }
+      ]
+    },
+    {
+      "userid": "fb8e8fe4-1e9c-4925-a3a4-96c43d1a0a12",
+      "title": "rrr",
+      "songs": [],
+      "_id": "3f4d4b0a-aa02-4d07-adae-153c311e31e5"
+    },
+    {
+      "userid": "fb8e8fe4-1e9c-4925-a3a4-96c43d1a0a12",
+      "title": "qqq",
+      "songs": [],
+      "_id": "3f3d8487-57ed-462f-a91e-a0d59929f416"
+    },
+    {
+      "userid": "fb8e8fe4-1e9c-4925-a3a4-96c43d1a0a12",
+      "title": "www",
+      "_id": "9e5889d6-ea70-46ca-9ebf-e1d7694df44a",
+      "tracks": [
+        {
+          "title": "www",
+          "artist": "2",
+          "duration": 1,
+          "_id": "81b7662b-e193-46cd-a254-3785760e151c"
+        }
+      ]
+    }
+  ]
 }

@@ -43,32 +43,31 @@ export const playlistJsonStore = {
     await db.write();
   },
 
-  async addSong(playlist, song) {
-    if (!playlist.songs) {
-      playlist.songs = [];
+  async addTrack(playlist, track) {
+    if (!playlist.tracks) {
+      playlist.tracks = [];
     }
-    song._id = v4();
-    playlist.songs.push(song);
+    track._id = v4();
+    playlist.tracks.push(track);
     await db.write();
   },
 
-  async removeSong(playlist, songId) {
-    const songs = playlist.songs;
-    const index = songs.findIndex (song => song._id == songId)
-    songs.splice(index, 1);
+  async removeTrack(playlist, trackId) {
+    const tracks = playlist.tracks;
+    const index = tracks.findIndex (track => track._id == trackId)
+    tracks.splice(index, 1);
     await db.write();
   },
 
-  async getSong(id, songId) {
+  async getTrack(id, trackId) {
     const playList = await this.getPlaylistById(id);
-    const songs = playList.songs.filter(song => song.id == songId);
-    return songs[0];
+    return playList.tracks.find(track => track._id == trackId);
   },
 
-  async updateSong(song, updatedSong) {
-    song.title = updatedSong.title;
-    song.artist = updatedSong.artist;
-    song.duration = updatedSong.duration;
+  async updateTrack(track, updatedTrack) {
+    track.title = updatedTrack.title;
+    track.artist = updatedTrack.artist;
+    track.duration = updatedTrack.duration;
     await db.write();
   }
 };

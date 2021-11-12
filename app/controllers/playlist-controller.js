@@ -20,20 +20,20 @@ export const playlistController = {
     return response.view("playlist-view", viewData);
   },
 
-  async deleteSong(request, response) {
+  async deleteTrack(request, response) {
     const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-    await playlistJsonStore.removeSong(playlist, request.params.songid);
+    await playlistJsonStore.removeTrack(playlist, request.params.songid);
     return response.redirect("/playlist/" + playlist._id);
   },
 
-  async addSong(request, response) {
-    const playlist = await playlistJsonStore.getPlaylistById(request.params.id);
-    const newSong = {
+  async addTrack(request, response) {
+    const playlist = await db.playlistStore.getPlaylistById(request.params.id);
+    const newTrack = {
       title: request.payload.title,
       artist: request.payload.artist,
       duration: Number(request.payload.duration)
     };
-    await playlistJsonStore.addSong(playlist, newSong);
+    await db.playlistStore.addTrack(playlist, newTrack);
     return response.redirect("/playlist/" + playlist._id);
   }
 };

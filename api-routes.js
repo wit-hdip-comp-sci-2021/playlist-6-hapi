@@ -14,4 +14,6 @@ export const apiRoutes = [
   { method: "POST", path: "/api/playlists", config: Playlists.create },
   { method: "DELETE", path: "/api/playlists/{id}", config: Playlists.deleteOne },
   { method: "DELETE", path: "/api/playlists", config: Playlists.deleteAll },
+
+  //{ method: "POST", path: "/api/playlists/{id}/songs", }
 ];

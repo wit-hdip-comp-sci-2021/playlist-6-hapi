@@ -1,7 +1,7 @@
 "use strict";
 import { db } from "../models/db.js";
 import Boom from "@hapi/boom";
-import { UserCredentials, UserDetails } from "../models/joi-schemas.js";
+import { UserCredentials, UserDetails } from "../api/schemas.js";
 
 export const accountsController = {
   index: {

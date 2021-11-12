@@ -32,29 +32,29 @@ export const playlistMemStore = {
     playlists = [];
   },
 
-  async addSong(playlist, song) {
-    if (!playlist.songs) {
-      playlist.songs = [];
+  async addTrack(playlist, track) {
+    if (!playlist.tracks) {
+      playlist.tracks = [];
     }
-    song._id = v4();
-    playlist.songs.push(song);
+    track._id = v4();
+    playlist.tracks.push(track);
   },
 
-  async removeSong(playlist, songId) {
-    const songs = playlist.songs;
-    const index = songs.findIndex (song => song._id == songId)
-    songs.splice(index, 1);
+  async removetrack(playlist, trackId) {
+    const tracks = playlist.tracks;
+    const index = tracks.findIndex (track => track._id == trackId)
+    tracks.splice(index, 1);
   },
 
-  async getSong(id, songId) {
+  async getTrack(id, trackId) {
     const playList = await this.getPlaylistById(id);
-    const songs = playList.songs.filter(song => song.id == songId);
-    return songs[0];
+    const tracks = playList.tracks.filter(track => track.id == trackId);
+    return tracks[0];
   },
 
-  async updateSong(song, updatedSong) {
-    song.title = updatedSong.title;
-    song.artist = updatedSong.artist;
-    song.duration = updatedSong.duration;
+  async updateTrack(track, updatedtrack) {
+    track.title = updatedtrack.title;
+    track.artist = updatedtrack.artist;
+    track.duration = updatedtrack.duration;
   }
 };

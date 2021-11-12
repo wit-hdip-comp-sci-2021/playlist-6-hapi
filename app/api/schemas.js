@@ -24,14 +24,14 @@ export const Song = Joi.object().keys({
   title: Joi.string().example("Piano Concerto No. 4").required(),
   artist: Joi.string().example("Beethoven").required(),
   duration: Joi.number().example(12).required()
-});
+}).label("Song");
 
 export const Playlist = Joi.object().keys({
   _id: Id,
   userid: Id,
   title: Joi.string().example("Playlist Title").required(),
-  __v: Joi.number()
-  //songs : Joi.array().items(Song).label("Song Array").required(),
-});
+  __v: Joi.number(),
+  songs : Joi.array().items(Song).label("Song Array"),
+}).label("Playlist");
 
 export const PlaylistArray = Joi.array().items(Playlist).label("Playlist Array");
