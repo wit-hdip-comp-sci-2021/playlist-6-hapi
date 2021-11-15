@@ -1,14 +1,11 @@
-"use strict";
-
 import { v4 } from "uuid";
+// eslint-disable-next-line import/no-unresolved
 import { JSONFile, Low } from "lowdb";
-import lodash from "lodash";
 
 const db = new Low(new JSONFile("./app/models/json/users.json"));
 db.data = { users: [] };
 
 export const userJsonStore = {
-
   async getAllUsers() {
     await db.read();
     return db.data.users;
@@ -24,17 +21,17 @@ export const userJsonStore = {
 
   async getUserById(id) {
     await db.read();
-    return db.data.users.find (user => user._id == id)
+    return db.data.users.find((user) => user._id === id);
   },
 
   async getUserByEmail(email) {
     await db.read();
-    return db.data.users.find (user => user.email == email)
+    return db.data.users.find((user) => user.email === email);
   },
 
   async deleteUserById(id) {
     await db.read();
-    const index = db.data.users.findIndex (user => user._id == id)
+    const index = db.data.users.findIndex((user) => user._id === id);
     db.data.users.splice(index, 1);
     await db.write();
   },
@@ -42,5 +39,5 @@ export const userJsonStore = {
   async deleteAll() {
     db.data.users = [];
     await db.write();
-  }
+  },
 };

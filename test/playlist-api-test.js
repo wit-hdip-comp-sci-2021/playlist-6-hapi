@@ -1,38 +1,35 @@
-"use strict";
-
 import { assert } from "chai";
+import lowdash from "lodash";
 import * as fixtures from "./fixtures.json";
 import { PlaylistService } from "./playlist-service.js";
-import lowdash from "lodash";
 
-suite("User API tests", function() {
-
-  let newUser = fixtures.default.newUser;
+suite("User API tests", () => {
+  const { newUser } = fixtures.default;
   const playlistService = new PlaylistService(fixtures.default.playlistService);
 
   const credentials = {
     email: newUser.email,
-    password: newUser.password
+    password: newUser.password,
   };
   const newPlaylist = {
-    title: "New Playlist"
+    title: "New Playlist",
   };
 
-  suiteSetup(async function() {
+  suiteSetup(async () => {
     await playlistService.deletePlaylists();
     await playlistService.deleteAllUsers();
     await playlistService.createUser(newUser);
   });
 
-  setup(async function() {
+  setup(async () => {
     await playlistService.deletePlaylists();
   });
 
-  teardown(async function() {
+  teardown(async () => {
     await playlistService.deletePlaylists();
   });
 
-  test("create playlist", async function() {
+  test("create playlist", async () => {
     const user = await playlistService.authenticate(credentials);
     assert.isNotNull(user._id, "no ID");
     newPlaylist.userid = user._id;
@@ -41,7 +38,7 @@ suite("User API tests", function() {
     assert(lowdash.some([playlist], newPlaylist), "returned playlist must be a superset of new playlist");
   });
 
-  test("delete a playlist", async function() {
+  test("delete a playlist", async () => {
     const user = await playlistService.authenticate(credentials);
     newPlaylist.userid = user._id;
     const playlist = await playlistService.createPlaylist(newPlaylist);
@@ -56,9 +53,10 @@ suite("User API tests", function() {
     }
   });
 
-  test("create multiple playlists", async function() {
+  test("create multiple playlists", async () => {
     const user = await playlistService.authenticate(credentials);
-    for (let playlist of fixtures.default.playlists) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const playlist of fixtures.default.playlists) {
       playlist.userid = user._id;
       await playlistService.createPlaylist(playlist);
     }
@@ -69,7 +67,7 @@ suite("User API tests", function() {
     assert.equal(playlists.length, 0);
   });
 
-  test("remove non-existant playlist", async function() {
+  test("remove non-existant playlist", async () => {
     const user = await playlistService.authenticate(credentials);
     try {
       const response = await playlistService.deletePlaylist("not an id");

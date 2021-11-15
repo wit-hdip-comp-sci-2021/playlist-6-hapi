@@ -1,11 +1,8 @@
-"use strict";
-
 import { v4 } from "uuid";
 
 let users = [];
 
 export const userMemStore = {
-
   async getAllUsers() {
     return users;
   },
@@ -17,19 +14,19 @@ export const userMemStore = {
   },
 
   async getUserById(id) {
-    return users.find(user => user._id == id);
+    return users.find((user) => user._id === id);
   },
 
   async getUserByEmail(email) {
-    return users.find(user => user.email == email);
+    return users.find((user) => user.email === email);
   },
 
   async deleteUserById(id) {
-    const index = users.findIndex(user => user._id == id);
+    const index = users.findIndex((user) => user._id === id);
     users.splice(index, 1);
   },
 
   async deleteAll() {
     users = [];
-  }
+  },
 };

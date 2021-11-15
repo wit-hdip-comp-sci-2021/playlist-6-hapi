@@ -1,13 +1,11 @@
-"use strict";
-
 import { v4 } from "uuid";
+// eslint-disable-next-line import/no-unresolved
 import { JSONFile, Low } from "lowdb";
 
 const db = new Low(new JSONFile("./app/models/json/tracks.json"));
 db.data = { tracks: [] };
 
 export const trackJsonStore = {
-
   async getAlltracks() {
     await db.read();
     return db.data.tracks;
@@ -24,22 +22,22 @@ export const trackJsonStore = {
 
   async getTracksByPlaylistId(id) {
     await db.read();
-    return db.data.tracks.filter(track => track.playlistid == id);
+    return db.data.tracks.filter((track) => track.playlistid === id);
   },
 
   async getTrackById(id) {
     await db.read();
-    return db.data.tracks.find(track => track._id == id);
+    return db.data.tracks.find((track) => track._id === id);
   },
 
   async getPlaylistTracks(playlistId) {
     await db.read();
-    return db.data.tracks.filter(track => track.playlistid == playlistId);
+    return db.data.tracks.filter((track) => track.playlistid === playlistId);
   },
 
   async deleteTrack(id) {
     await db.read();
-    const index = db.data.tracks.findIndex(track => track._id == id);
+    const index = db.data.tracks.findIndex((track) => track._id === id);
     db.data.tracks.splice(index, 1);
     await db.write();
   },
@@ -54,5 +52,5 @@ export const trackJsonStore = {
     track.artist = updatedTrack.artist;
     track.duration = updatedTrack.duration;
     await db.write();
-  }
+  },
 };

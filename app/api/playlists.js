@@ -10,7 +10,7 @@ import { validationError } from "../utils/logger.js";
 export const Playlists = {
   find: {
     auth: false,
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       try {
         const playlists = await db.playlistStore.getAllPlaylists();
         return playlists;
@@ -21,12 +21,12 @@ export const Playlists = {
     tags: ["api"],
     response: { schema: PlaylistArray, failAction: validationError },
     description: "Get all playlists",
-    notes: "Returns all playlists"
+    notes: "Returns all playlists",
   },
 
   findOne: {
     auth: false,
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       try {
         const playlist = await db.playlistStore.getPlaylist(request.params.id);
         if (!playlist) {
@@ -41,12 +41,12 @@ export const Playlists = {
     description: "Find a Playlist",
     notes: "Returns a playlist",
     validate: { params: Id, failAction: validationError },
-    response: { schema: Playlist, failAction: validationError }
+    response: { schema: Playlist, failAction: validationError },
   },
 
   create: {
     auth: false,
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       try {
         const playlist = request.payload;
         const newPlaylist = await db.playlistStore.addPlaylist(playlist);
@@ -62,12 +62,12 @@ export const Playlists = {
     description: "Create a Playlist",
     notes: "Returns the newly created playlist",
     validate: { payload: Playlist, failAction: validationError },
-    response: { schema: Playlist, failAction: validationError }
+    response: { schema: Playlist, failAction: validationError },
   },
 
   deleteOne: {
     auth: false,
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       try {
         const playlist = await db.playlistStore.getPlaylistById(request.params.id);
         if (!playlist) {
@@ -81,12 +81,12 @@ export const Playlists = {
     },
     tags: ["api"],
     description: "Delete a playlist",
-    validate: { params: Id, failAction: validationError }
+    validate: { params: Id, failAction: validationError },
   },
 
   deleteAll: {
     auth: false,
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       try {
         await db.playlistStore.deleteAllPlaylists();
         return h.response().code(204);
@@ -95,6 +95,6 @@ export const Playlists = {
       }
     },
     tags: ["api"],
-    description: "Delete all Playlists"
-  }
+    description: "Delete all Playlists",
+  },
 };

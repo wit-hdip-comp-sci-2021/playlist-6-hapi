@@ -1,9 +1,6 @@
-"use strict";
-
 import { User } from "./user.js";
 
 export const userMongoStore = {
-
   async getAllUsers() {
     const users = await User.find().lean();
     return users;
@@ -11,7 +8,7 @@ export const userMongoStore = {
 
   async getUserById(id) {
     const user = await User.findOne({ _id: id }).lean();
-    return user
+    return user;
   },
 
   async addUser(user) {
@@ -31,5 +28,5 @@ export const userMongoStore = {
 
   async deleteAll() {
     await User.deleteMany({});
-  }
+  },
 };

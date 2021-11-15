@@ -1,13 +1,11 @@
-"use strict";
-
 import { v4 } from "uuid";
+// eslint-disable-next-line import/no-unresolved
 import { JSONFile, Low } from "lowdb";
 
 const db = new Low(new JSONFile("./app/models/json/playlists.json"));
 db.data = { playlists: [] };
 
 export const playlistJsonStore = {
-
   async getAllPlaylists() {
     await db.read();
     return db.data.playlists;
@@ -23,17 +21,17 @@ export const playlistJsonStore = {
 
   async getPlaylistById(id) {
     await db.read();
-    return db.data.playlists.find (playlist => playlist._id == id)
+    return db.data.playlists.find((playlist) => playlist._id == id);
   },
 
   async getUserPlaylists(userid) {
     await db.read();
-    return db.data.playlists.filter (playlist => playlist.userid == userid)
+    return db.data.playlists.filter((playlist) => playlist.userid == userid);
   },
 
   async deletePlaylistById(id) {
     await db.read();
-    const index = db.data.playlists.findIndex (playlist => playlist._id == id)
+    const index = db.data.playlists.findIndex((playlist) => playlist._id == id);
     db.data.playlists.splice(index, 1);
     await db.write();
   },
@@ -41,5 +39,5 @@ export const playlistJsonStore = {
   async deleteAllPlaylists() {
     db.data.playlists = [];
     await db.write();
-  }
+  },
 };

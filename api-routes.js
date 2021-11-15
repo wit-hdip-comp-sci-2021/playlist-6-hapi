@@ -15,5 +15,5 @@ export const apiRoutes = [
   { method: "DELETE", path: "/api/playlists/{id}", config: Playlists.deleteOne },
   { method: "DELETE", path: "/api/playlists", config: Playlists.deleteAll },
 
-  //{ method: "POST", path: "/api/playlists/{id}/songs", }
+  // { method: "POST", path: "/api/playlists/{id}/songs", }
 ];

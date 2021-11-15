@@ -1,4 +1,3 @@
-"use strict";
 import { db } from "../models/db.js";
 
 export const trackController = {
@@ -8,7 +7,7 @@ export const trackController = {
     const viewData = {
       title: "Edit Song",
       playlist: playlist,
-      track: track
+      track: track,
     };
     return response.view("track-view", viewData);
   },
@@ -18,9 +17,9 @@ export const trackController = {
     const newTrack = {
       title: request.payload.title,
       artist: request.payload.artist,
-      duration: Number(request.payload.duration)
+      duration: Number(request.payload.duration),
     };
     await db.trackStore.updateTrack(track, newTrack);
-    return response.redirect("/playlist/" + request.params.id);
-  }
+    return response.redirect(`/playlist/${request.params.id}`);
+  },
 };

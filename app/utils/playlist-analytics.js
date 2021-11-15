@@ -1,10 +1,10 @@
-"use strict";
-
 export const playlistAnalytics = {
-  getShortestSong(playlist) {
+  getShortestSong: function (playlist) {
     let shortestSong = null;
     if (playlist.songs && playlist.songs.length > 0) {
+      // eslint-disable-next-line prefer-destructuring
       shortestSong = playlist.songs[0];
+      // eslint-disable-next-line no-plusplus
       for (let i = 1; i < playlist.songs.length; i++) {
         if (playlist.songs[i].duration < shortestSong.duration) {
           shortestSong = playlist.songs[i];
@@ -18,11 +18,10 @@ export const playlistAnalytics = {
     let playlistDuration = 0;
     if (playlist.songs) {
       for (let i = 0; i < playlist.songs.length; i++) {
-        let song = playlist.songs[i];
-        playlistDuration = playlistDuration + song.duration;
+        const song = playlist.songs[i];
+        playlistDuration += song.duration;
       }
     }
     return playlistDuration;
-  }
+  },
 };
-

@@ -1,5 +1,3 @@
-"use strict";
-
 import { db } from "../models/db.js";
 
 export const dashboardController = {
@@ -8,7 +6,7 @@ export const dashboardController = {
     const playlists = await db.playlistStore.getUserPlaylists(loggedInUser._id);
     const viewData = {
       title: "Playlist Dashboard",
-      playlists: playlists
+      playlists: playlists,
     };
     return response.view("dashboard-view.hbs", viewData);
   },
@@ -27,5 +25,5 @@ export const dashboardController = {
     };
     let obj = await db.playlistStore.addPlaylist(newPlayList);
     return response.redirect("/dashboard");
-  }
+  },
 };

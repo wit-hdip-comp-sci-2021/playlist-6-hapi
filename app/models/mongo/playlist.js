@@ -1,7 +1,6 @@
-"use strict";
-
 import Mongoose from "mongoose";
-const Schema = Mongoose.Schema;
+
+const { Schema } = Mongoose;
 
 const playlistSchema = new Schema({
   title: String,

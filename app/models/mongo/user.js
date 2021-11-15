@@ -1,8 +1,7 @@
-"use strict";
-
 import Mongoose from "mongoose";
 import Boom from "@hapi/boom";
-const Schema = Mongoose.Schema;
+
+const { Schema } = Mongoose;
 
 const userSchema = new Schema({
   firstName: String,
