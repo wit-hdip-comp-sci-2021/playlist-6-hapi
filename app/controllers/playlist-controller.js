@@ -1,6 +1,5 @@
 "use strict";
 
-import { playlistJsonStore } from "../models/json/playlist-json-store.js";
 import { playlistAnalytics } from "../utils/playlist-analytics.js";
 import { db } from "../models/db.js";
 
@@ -9,9 +8,11 @@ export const playlistController = {
 
   async index(request, response) {
     const playlist = await db.playlistStore.getPlaylistById(request.params.id);
+    const tracks = await db.trackStore.getTracksByPlaylistId(playlist._id);
     const viewData = {
       title: "Playlist",
       playlist: playlist,
+      tracks: tracks,
       playlistSummary: {
         shortestSong: playlistAnalytics.getShortestSong(playlist),
         duration: playlistAnalytics.getPlaylistDuration(playlist)
@@ -22,7 +23,7 @@ export const playlistController = {
 
   async deleteTrack(request, response) {
     const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-    await playlistJsonStore.removeTrack(playlist, request.params.songid);
+    await db.trackStore.deleteTrack(request.params.trackid);
     return response.redirect("/playlist/" + playlist._id);
   },
 
@@ -33,7 +34,7 @@ export const playlistController = {
       artist: request.payload.artist,
       duration: Number(request.payload.duration)
     };
-    await db.playlistStore.addTrack(playlist, newTrack);
+    await db.trackStore.addTrack(playlist._id, newTrack);
     return response.redirect("/playlist/" + playlist._id);
   }
 };
