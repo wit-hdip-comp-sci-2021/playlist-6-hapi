@@ -25,7 +25,10 @@ suite("User API tests", () => {
       password: "secret",
     };
     const returnedUser = await playlistService.createUser(newUser);
-    assert(lodash.some([returnedUser], testUser), "returnedUser must be a superset of newUser");
+    assert(
+      lodash.some([returnedUser], testUser),
+      "returnedUser must be a superset of newUser"
+    );
     assert.isDefined(returnedUser._id);
   });
 
@@ -39,10 +42,15 @@ suite("User API tests", () => {
 
   test("get non existent user", async () => {
     try {
-      const u1 = await playlistService.getUser("3aea486f-7757-47d4-a088-4604b57c90fc");
+      const u1 = await playlistService.getUser(
+        "3aea486f-7757-47d4-a088-4604b57c90fc"
+      );
       assert.fail("Failed to respond to non existent user");
     } catch (error) {
-      assert(error.response.data.message === "No User with this id", "Incorrect Response Message");
+      assert(
+        error.response.data.message === "No User with this id",
+        "Incorrect Response Message"
+      );
     }
   });
 
@@ -54,7 +62,10 @@ suite("User API tests", () => {
       u = await playlistService.getUser(u._id);
       assert.fail("User should have been deleted");
     } catch (error) {
-      assert(error.response.data.message === "No User with this id", "Incorrect Response Message");
+      assert(
+        error.response.data.message === "No User with this id",
+        "Incorrect Response Message"
+      );
     }
   });
 
@@ -75,8 +86,7 @@ suite("User API tests", () => {
     const user = await playlistService.createUser(newUser);
     // eslint-disable-next-line no-restricted-syntax
     for (const u of users) {
-      // eslint-disable-next-line no-await-in-loop
-      await playlistService.createUser(u);
+      playlistService.createUser(u);
     }
 
     const testUser = {
@@ -88,7 +98,10 @@ suite("User API tests", () => {
     users.unshift(testUser);
     const allUsers = await playlistService.getUsers();
     for (let i = 0; i < users.length; i += 1) {
-      assert(lodash.some([allUsers[i]], users[i]), "returnedUser must be a superset of newUser");
+      assert(
+        lodash.some([allUsers[i]], users[i]),
+        "returnedUser must be a superset of newUser"
+      );
     }
   });
 
@@ -112,7 +125,11 @@ suite("User API tests", () => {
       const result = await playlistService.authenticate(credentials);
       fail("Invalid credentials not detected");
     } catch (error) {
-      assert.equal(error.response.data.statusCode, 401, "Incorrect Response Code");
+      assert.equal(
+        error.response.data.statusCode,
+        401,
+        "Incorrect Response Code"
+      );
     }
   });
 });

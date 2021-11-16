@@ -1,5 +1,3 @@
-// https://dev.to/bigyank/a-quick-guide-to-setup-eslint-with-airbnb-and-prettier-3di2
-
 import Hapi from "@hapi/hapi";
 import Inert from "@hapi/inert";
 import Vision from "@hapi/vision";
@@ -17,9 +15,7 @@ import * as pack from "./package.json";
 
 import { apiRoutes } from "./api-routes.js";
 
-// eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(__filename);
 
 const result = dotenv.config();

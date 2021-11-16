@@ -23,7 +23,7 @@ export const dashboardController = {
       userid: loggedInUser._id,
       title: request.payload.title,
     };
-    let obj = await db.playlistStore.addPlaylist(newPlayList);
+    await db.playlistStore.addPlaylist(newPlayList);
     return response.redirect("/dashboard");
   },
 };
