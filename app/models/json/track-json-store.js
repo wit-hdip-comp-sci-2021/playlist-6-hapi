@@ -6,7 +6,7 @@ const db = new Low(new JSONFile("./app/models/json/tracks.json"));
 db.data = { tracks: [] };
 
 export const trackJsonStore = {
-  async getAlltracks() {
+  async getAllTracks() {
     await db.read();
     return db.data.tracks;
   },
@@ -42,7 +42,7 @@ export const trackJsonStore = {
     await db.write();
   },
 
-  async deleteAlltracks() {
+  async deleteAllTracks() {
     db.data.tracks = [];
     await db.write();
   },

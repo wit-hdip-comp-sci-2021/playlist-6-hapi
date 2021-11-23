@@ -59,4 +59,19 @@ export class PlaylistService {
     const response = await axios.delete(`${this.baseUrl}/api/playlists/${id}`);
     return response;
   }
+
+  async getTracks() {
+    const res = await axios.get(`${this.baseUrl}/api/tracks`);
+    return res.data;
+  }
+
+  async createTrack(id, track) {
+    const res = await axios.post(`${this.baseUrl}/api/playlists/${id}/tracks`, track);
+    return res.data;
+  }
+
+  async deleteAllTracks() {
+    const res = await axios.delete(`${this.baseUrl}/api/tracks`);
+    return res.data;
+  }
 }

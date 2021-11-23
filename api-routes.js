@@ -1,5 +1,6 @@
 import { Users } from "./app/api/users.js";
 import { Playlists } from "./app/api/playlists.js";
+import { Tracks } from "./app/api/tracks.js";
 
 export const apiRoutes = [
   { method: "GET", path: "/api/users", config: Users.find },
@@ -15,5 +16,7 @@ export const apiRoutes = [
   { method: "DELETE", path: "/api/playlists/{id}", config: Playlists.deleteOne },
   { method: "DELETE", path: "/api/playlists", config: Playlists.deleteAll },
 
-  // { method: "POST", path: "/api/playlists/{id}/songs", }
+  { method: "GET", path: "/api/tracks", config: Tracks.find },
+  { method: "POST", path: "/api/playlists/{id}/tracks", config: Tracks.create },
+  { method: "DELETE", path: "/api/tracks", config: Tracks.deleteAll },
 ];

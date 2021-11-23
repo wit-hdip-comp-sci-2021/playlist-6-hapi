@@ -11,9 +11,9 @@ export const db = {
   trackStore: null,
 
   init() {
-    this.userStore = userMemStore;
-    this.playlistStore = playlistMemStore;
-    // this.trackStore = trackMemStore;
+    this.userStore = userJsonStore;
+    this.playlistStore = playlistJsonStore;
+    this.trackStore = trackJsonStore;
     initMongo();
   },
 };

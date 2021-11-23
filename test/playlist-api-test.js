@@ -1,9 +1,9 @@
 import { assert } from "chai";
-import lowdash from "lodash";
 import * as fixtures from "./fixtures.json";
 import { PlaylistService } from "./playlist-service.js";
+import { isSubset } from "./test-utils.js";
 
-suite("User API tests", () => {
+suite("Playlist API tests", () => {
   const { newUser } = fixtures.default;
   const playlistService = new PlaylistService(fixtures.default.playlistService);
 
@@ -33,12 +33,9 @@ suite("User API tests", () => {
     const user = await playlistService.authenticate(credentials);
     assert.isNotNull(user._id, "no ID");
     newPlaylist.userid = user._id;
-    const playlist = await playlistService.createPlaylist(newPlaylist);
-    assert.isNotNull(playlist);
-    assert(
-      lowdash.some([playlist], newPlaylist),
-      "returned playlist must be a superset of new playlist"
-    );
+    const returnedPlaylist = await playlistService.createPlaylist(newPlaylist);
+    assert.isNotNull(returnedPlaylist);
+    assert(isSubset(newPlaylist, returnedPlaylist), "returned playlist must be a superset of new playlist");
   });
 
   test("delete a playlist", async () => {
@@ -52,10 +49,7 @@ suite("User API tests", () => {
       const returnedPlaylist = await playlistService.getPlaylist(playlist.id);
       assert.fail("Should not return a response");
     } catch (error) {
-      assert(
-        error.response.data.message === "No Playlist with this id",
-        "Incorrect Response Message"
-      );
+      assert(error.response.data.message === "No Playlist with this id", "Incorrect Response Message");
     }
   });
 
@@ -64,7 +58,8 @@ suite("User API tests", () => {
     // eslint-disable-next-line no-restricted-syntax
     for (const playlist of fixtures.default.playlists) {
       playlist.userid = user._id;
-      playlistService.createPlaylist(playlist);
+      // eslint-disable-next-line no-await-in-loop
+      await playlistService.createPlaylist(playlist);
     }
     let playlists = await playlistService.getPlaylists();
     assert.equal(fixtures.default.playlists.length, playlists.length);
@@ -79,10 +74,7 @@ suite("User API tests", () => {
       const response = await playlistService.deletePlaylist("not an id");
       assert.fail("Should not return a response");
     } catch (error) {
-      assert(
-        error.response.data.message === "No Playlist with this id",
-        "Incorrect Response Message"
-      );
+      assert(error.response.data.message === "No Playlist with this id", "Incorrect Response Message");
     }
   });
 });

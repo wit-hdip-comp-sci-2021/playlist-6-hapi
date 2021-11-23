@@ -1,5 +1,3 @@
-"use strict";
-
 import Boom from "@hapi/boom";
 import { Id, Playlist, PlaylistArray } from "./schemas.js";
 import { db } from "../models/db.js";
@@ -26,7 +24,7 @@ export const Playlists = {
 
   findOne: {
     auth: false,
-    handler: async function (request, h) {
+    async handler(request) {
       try {
         const playlist = await db.playlistStore.getPlaylist(request.params.id);
         if (!playlist) {
